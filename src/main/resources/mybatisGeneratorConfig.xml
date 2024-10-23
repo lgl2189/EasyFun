@@ -1,0 +1,27 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="jdbc.properties"/>
+    <context id="simple" targetRuntime="MyBatis3Simple">
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+            <!--是否生成注释-->
+            <property name="remarksReporting" value="true"/>
+            <!--MySQL 不支持 schema 或者 catalog 所以需要添加这个-->
+            <!--参考 : http://www.mybatis.org/generator/usage/mysql.html-->
+            <!--防止生成其他库同名表-->
+            <property name="nullCatalogMeansCurrent" value="true" />
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.easyfun.pojo1" targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="com.easyfun.mapper1" targetProject="src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.easyfun.mapper1" targetProject="src/main/java"/>
+
+        <table tableName="user" />
+    </context>
+</generatorConfiguration>
