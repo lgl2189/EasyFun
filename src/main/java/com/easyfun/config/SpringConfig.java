@@ -1,6 +1,7 @@
 package com.easyfun.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.google.gson.Gson;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -40,5 +41,10 @@ public class SpringConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean;
+    }
+
+    @Bean
+    public Gson gson(){
+        return new Gson();
     }
 }
