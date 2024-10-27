@@ -2,17 +2,11 @@ package com.easyfun.pojo;
 
 import java.time.LocalDateTime;
 
-/**
- * @author ：李冠良
- * @description： 无描述
- * @date ：2024/10/27 下午2:36
- */
-
-
 public class Token {
-
     private String token;
+
     private Long uid;
+
     private LocalDateTime expireDate;
 
     public Token(String token, Long uid) {
