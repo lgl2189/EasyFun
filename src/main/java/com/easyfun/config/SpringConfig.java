@@ -2,7 +2,7 @@ package com.easyfun.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.gson.Gson;
-import org.apache.ibatis.session.SqlSessionFactory;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,5 +46,10 @@ public class SpringConfig {
     @Bean
     public Gson gson(){
         return new Gson();
+    }
+
+    @Bean
+    public PhoneNumberUtil phoneNumberUtil(){
+        return PhoneNumberUtil.getInstance();
     }
 }

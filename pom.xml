@@ -7,7 +7,6 @@
     <groupId>com.lgl</groupId>
     <artifactId>EasyFun</artifactId>
     <version>1.0-SNAPSHOT</version>
-
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -74,5 +73,41 @@
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>8.10.1</version>
+        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <!--MyBatis generator 自动生成代码插件-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.4.2</version>
+                <configuration>
+                    <configurationFile>
+                        ${basedir}/src/main/resources/mybatisGeneratorConfig.xml
+                    </configurationFile>
+                    <overwrite>true</overwrite>
+                    <!--是否打印详细日志，生产环境关闭 -->
+                    <verbose>true</verbose>
+                </configuration>
+                <!--配置数据库连接及myBatis generator core 依赖-->
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.33</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>1.4.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 </project>
