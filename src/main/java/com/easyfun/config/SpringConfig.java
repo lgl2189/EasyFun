@@ -1,8 +1,11 @@
 package com.easyfun.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.support.logging.Log4jImpl;
 import com.google.gson.Gson;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 /**
  * @author ：李冠良

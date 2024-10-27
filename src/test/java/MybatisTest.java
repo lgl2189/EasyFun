@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 
 
-public class Test {
+public class MybatisTest {
 
     public static void main(String[] args) {
         // 初始化 Spring 应用上下文
