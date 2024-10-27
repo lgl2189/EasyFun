@@ -202,4 +202,30 @@ public class User {
     public void setIpPos(String ipPos) {
         this.ipPos = ipPos;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", schoolName='" + schoolName + '\'' +
+                ", signature='" + signature + '\'' +
+                ", vipStatus=" + vipStatus +
+                ", level=" + level +
+                ", exp=" + exp +
+                ", coin=" + coin +
+                ", follower=" + follower +
+                ", attention=" + attention +
+                ", postNumber=" + postNumber +
+                ", nowTag=" + nowTag +
+                ", likeNumber=" + likeNumber +
+                ", viewNumber=" + viewNumber +
+                ", avatarPath='" + avatarPath + '\'' +
+                ", ipPos='" + ipPos + '\'' +
+                '}';
+    }
 }

@@ -1,14 +1,8 @@
 package com.easyfun.controller;
 
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 /**
  * @author ：李冠良

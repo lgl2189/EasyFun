@@ -23,6 +23,6 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.easyfun.mapper" targetProject="src/main/java"/>
 
-        <table tableName="user"/>
+        <table tableName="token"/>
     </context>
 </generatorConfiguration>

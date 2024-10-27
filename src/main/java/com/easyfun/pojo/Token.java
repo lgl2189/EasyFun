@@ -38,4 +38,13 @@ public class Token {
     public void setExpireDate(LocalDateTime expireDate) {
         this.expireDate = expireDate;
     }
+
+    @Override
+    public String toString() {
+        return "Token{" +
+                "token='" + token + '\'' +
+                ", uid=" + uid +
+                ", expireDate=" + expireDate +
+                '}';
+    }
 }
