@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfun.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.easyfun.pojo.User">
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="vip_status" jdbcType="BIT" property="vipStatus" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="exp" jdbcType="INTEGER" property="exp" />
+    <result column="coin" jdbcType="INTEGER" property="coin" />
+    <result column="follower" jdbcType="INTEGER" property="follower" />
+    <result column="attention" jdbcType="INTEGER" property="attention" />
+    <result column="post_number" jdbcType="INTEGER" property="postNumber" />
+    <result column="now_tag" jdbcType="BIGINT" property="nowTag" />
+    <result column="like_number" jdbcType="INTEGER" property="likeNumber" />
+    <result column="view_number" jdbcType="INTEGER" property="viewNumber" />
+    <result column="avatar_path" jdbcType="VARCHAR" property="avatarPath" />
+    <result column="ip_pos" jdbcType="LONGVARCHAR" property="ipPos" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.easyfun.pojo.User">
+    insert into user (uid, name, password, 
+      phone, gender, birthday, 
+      school_name, signature, vip_status, 
+      level, exp, coin, follower, 
+      attention, post_number, now_tag, 
+      like_number, view_number, avatar_path, 
+      ip_pos)
+    values (#{uid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{schoolName,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, #{vipStatus,jdbcType=BIT}, 
+      #{level,jdbcType=INTEGER}, #{exp,jdbcType=INTEGER}, #{coin,jdbcType=INTEGER}, #{follower,jdbcType=INTEGER}, 
+      #{attention,jdbcType=INTEGER}, #{postNumber,jdbcType=INTEGER}, #{nowTag,jdbcType=BIGINT}, 
+      #{likeNumber,jdbcType=INTEGER}, #{viewNumber,jdbcType=INTEGER}, #{avatarPath,jdbcType=VARCHAR}, 
+      #{ipPos,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.User">
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      vip_status = #{vipStatus,jdbcType=BIT},
+      level = #{level,jdbcType=INTEGER},
+      exp = #{exp,jdbcType=INTEGER},
+      coin = #{coin,jdbcType=INTEGER},
+      follower = #{follower,jdbcType=INTEGER},
+      attention = #{attention,jdbcType=INTEGER},
+      post_number = #{postNumber,jdbcType=INTEGER},
+      now_tag = #{nowTag,jdbcType=BIGINT},
+      like_number = #{likeNumber,jdbcType=INTEGER},
+      view_number = #{viewNumber,jdbcType=INTEGER},
+      avatar_path = #{avatarPath,jdbcType=VARCHAR},
+      ip_pos = #{ipPos,jdbcType=LONGVARCHAR}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select uid, name, password, phone, gender, birthday, school_name, signature, vip_status, 
+    level, exp, coin, follower, attention, post_number, now_tag, like_number, view_number, 
+    avatar_path, ip_pos
+    from user
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select uid, name, password, phone, gender, birthday, school_name, signature, vip_status, 
+    level, exp, coin, follower, attention, post_number, now_tag, like_number, view_number, 
+    avatar_path, ip_pos
+    from user
+  </select>
+</mapper>
