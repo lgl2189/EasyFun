@@ -2,33 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyfun.mapper.TokenMapper">
   <resultMap id="BaseResultMap" type="com.easyfun.pojo.Token">
-    <id column="token" jdbcType="VARCHAR" property="token" />
+    <id column="token_value" jdbcType="VARCHAR" property="tokenValue" />
     <result column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="expire_date" jdbcType="TIMESTAMP" property="expireDate" />
+    <result column="expire_datetime" jdbcType="TIMESTAMP" property="expireDatetime" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from token
-    where token = #{token,jdbcType=VARCHAR}
+    where token_value = #{tokenValue,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.easyfun.pojo.Token">
-    insert into token (token, uid, expire_date
-      )
-    values (#{token,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{expireDate,jdbcType=TIMESTAMP}
-      )
+    insert into token (token_value, uid, expire_datetime
+    )
+    values (#{tokenValue,jdbcType=VARCHAR}, #{uid,jdbcType=BIGINT}, #{expireDatetime,jdbcType=TIMESTAMP}
+           )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.Token">
     update token
-    set uid = #{uid,jdbcType=BIGINT},
-      expire_date = #{expireDate,jdbcType=TIMESTAMP}
-    where token = #{token,jdbcType=VARCHAR}
+    <set>
+      <if test="uid!= null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="expireDatetime!= null">
+        expire_datetime = #{expireDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where token_value = #{tokenValue,jdbcType=VARCHAR}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select token, uid, expire_date
+    select token_value, uid, expire_datetime
     from token
-    where token = #{token,jdbcType=VARCHAR}
+    where token_value = #{tokenValue,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select token, uid, expire_date
+    select token_value, uid, expire_datetime
     from token
   </select>
 </mapper>

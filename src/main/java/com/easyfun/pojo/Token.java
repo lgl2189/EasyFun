@@ -3,24 +3,30 @@ package com.easyfun.pojo;
 import java.time.LocalDateTime;
 
 public class Token {
-    private String token;
+
+    private String tokenValue;
 
     private Long uid;
 
-    private LocalDateTime expireDate;
+    private LocalDateTime expireDatetime;
 
-    public Token(String token, Long uid) {
-        this.token = token;
+    /**
+     * Constructor，生成一个Token对象，默认有效期为1天
+     * @param tokenValue token值
+     * @param uid 所属用户的uid
+     */
+    public Token(String tokenValue, Long uid) {
+        this.tokenValue = tokenValue;
         this.uid = uid;
-        this.expireDate = LocalDateTime.now().plusDays(1);
+        this.expireDatetime = LocalDateTime.now().plusDays(1);
     }
 
-    public String getToken() {
-        return token;
+    public String getTokenValue() {
+        return tokenValue;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setTokenValue(String tokenValue) {
+        this.tokenValue = tokenValue;
     }
 
     public Long getUid() {
@@ -31,20 +37,20 @@ public class Token {
         this.uid = uid;
     }
 
-    public LocalDateTime getExpireDate() {
-        return expireDate;
+    public LocalDateTime getExpireDatetime() {
+        return expireDatetime;
     }
 
-    public void setExpireDate(LocalDateTime expireDate) {
-        this.expireDate = expireDate;
+    public void setExpireDatetime(LocalDateTime expireDatetime) {
+        this.expireDatetime = expireDatetime;
     }
 
     @Override
     public String toString() {
         return "Token{" +
-                "token='" + token + '\'' +
+                "token='" + tokenValue + '\'' +
                 ", uid=" + uid +
-                ", expireDate=" + expireDate +
+                ", expireDate=" + expireDatetime +
                 '}';
     }
 }

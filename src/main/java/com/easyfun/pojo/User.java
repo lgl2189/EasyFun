@@ -11,6 +11,8 @@ public class User {
 
     private String phone;
 
+    private String email;
+
     private Integer gender;
 
     private Date birthday;
@@ -73,6 +75,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Integer getGender() {

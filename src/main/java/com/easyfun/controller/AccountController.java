@@ -1,8 +1,18 @@
 package com.easyfun.controller;
 
+import com.easyfun.entity.JsonDataWrapper;
+import com.easyfun.pojo.User;
+import com.easyfun.service.TokenService;
+import com.easyfun.service.UserService;
+import com.easyfun.util.JsonDataWrapperUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ：李冠良
@@ -13,15 +23,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
-    @PostMapping("/login/pass")
-    public String loginByPass() {
 
-        return null;
+    private final TokenService tokenService;
+    private final UserService userService;
+
+    @Autowired
+    public AccountController(TokenService tokenService, UserService userService) {
+        Assert.notNull(tokenService, "tokenService must not be null");
+        Assert.notNull(userService, "userService must not be null");
+        this.tokenService = tokenService;
+        this.userService = userService;
+    }
+
+    @PostMapping("/login/pass")
+    public @ResponseBody JsonDataWrapper loginByPass(@RequestBody Map<String, String> reqMap) {
+        String phone = reqMap.get("phone");
+        String password = reqMap.get("password");
+        String loginToken = reqMap.get("login_token");
+        // TODO: 校验login_token是否存在于数据库
+        User user = new User();
+        user.setPhone(phone);
+        user.setPassword(password);
+        Long userId = userService.getUid(user);
+        if (userId == null) {
+            return JsonDataWrapperUtil.fail(null, "401", "参数为空");
+        }
+        String token = tokenService.insertToken(userId);
+        Map<String, String> resMap = new HashMap<String, String>();
+        resMap.put("account_token", token);
+        return JsonDataWrapperUtil.success(resMap);
     }
 
     @PostMapping("/login/phone")
-    public String loginByPhone() {
+    public JsonDataWrapper loginByPhone(HttpSession session, @RequestBody Map<String, String> reqMap) {
+//        Long userId = userService.getUid(user);
+//        if(userId != null) {
+//            String token = tokenService.insertToken(userId);
+//            return JsonDataWrapperUtil.success(token);
+//        }
+        return JsonDataWrapperUtil.fail(null, "401", "参数为空");
+    }
 
-        return null;
+    @GetMapping("/loginToken/get")
+    public JsonDataWrapper getLoginToken(HttpSession session) {
+        String loginToken = tokenService.getLoginToken();
+        session.setAttribute("login_token", loginToken);
+        Map<String, String> resMap = new HashMap<String, String>();
+        resMap.put("login_token", loginToken);
+        return JsonDataWrapperUtil.success(resMap);
     }
 }

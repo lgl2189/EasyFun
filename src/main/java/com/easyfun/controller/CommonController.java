@@ -1,16 +1,19 @@
 package com.easyfun.controller;
 
-import com.easyfun.entity.DataWrapper;
+import com.easyfun.entity.JsonDataWrapper;
 import com.easyfun.entity.PhonePrefix;
 import com.easyfun.service.CommonService;
 import com.easyfun.util.JsonDataWrapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ：李冠良
@@ -22,14 +25,21 @@ import java.util.List;
 @RequestMapping("/common")
 public class CommonController {
 
+    private final CommonService commonService;
+
     @Autowired
-    private CommonService commonService;
+    public CommonController(CommonService commonService) {
+        Assert.notNull(commonService, "commonService must not be null");
+        this.commonService = commonService;
+    }
 
     @GetMapping("/phonePrefixAreaList")
     @ResponseBody
-    public DataWrapper phonePrefixAreaList(){
+    public JsonDataWrapper phonePrefixAreaList(){
         List<PhonePrefix> phonePrefixes = commonService.getPhonePrefixAreaList();
-        return JsonDataWrapperUtil.success(phonePrefixes);
+        Map<String, List<PhonePrefix>> map = new HashMap<>();
+        map.put("phonePrefixAreaList", phonePrefixes);
+        return JsonDataWrapperUtil.success(map);
     }
 
 }

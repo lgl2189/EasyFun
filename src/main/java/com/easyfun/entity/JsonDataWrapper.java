@@ -7,16 +7,16 @@ package com.easyfun.entity;
  */
 
 
-public class DataWrapper {
+public class JsonDataWrapper {
     private Object data;
     private String status;
     private String message;
 
-    public DataWrapper(Object data) {
+    public JsonDataWrapper(Object data) {
         this.data = data;
     }
 
-    public DataWrapper(Object data, String status, String message) {
+    public JsonDataWrapper(Object data, String status, String message) {
         this.data = data;
         this.status = status;
         this.message = message;
@@ -44,5 +44,14 @@ public class DataWrapper {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "JsonDataWrapper{" +
+                "data=" + data +
+                ", status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

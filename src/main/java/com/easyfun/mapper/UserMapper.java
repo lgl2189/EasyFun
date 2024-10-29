@@ -2,12 +2,10 @@ package com.easyfun.mapper;
 
 import com.easyfun.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
-@Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Long uid);
 
@@ -16,6 +14,8 @@ public interface UserMapper {
     User selectByPrimaryKey(Long uid);
 
     List<User> selectAll();
+
+    Long selectUid(User user);
 
     int updateByPrimaryKey(User row);
 }

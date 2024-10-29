@@ -1,11 +1,9 @@
 package com.easyfun.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.support.logging.Log4jImpl;
 import com.google.gson.Gson;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.apache.commons.text.RandomStringGenerator;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
-import java.util.Map;
+import java.util.Random;
 
 /**
  * @author ：李冠良
@@ -24,7 +22,7 @@ import java.util.Map;
  */
 
 @Configuration
-@ComponentScan("com.easyfun.service")
+@ComponentScan({"com.easyfun.service","com.easyfun.util"})
 @MapperScan("com.easyfun.mapper")
 @PropertySource("classpath:jdbc.properties")
 public class SpringConfig {
@@ -56,5 +54,10 @@ public class SpringConfig {
     @Bean
     public PhoneNumberUtil phoneNumberUtil(){
         return PhoneNumberUtil.getInstance();
+    }
+
+    @Bean
+    public RandomStringGenerator randomStringGenerator(){
+        return new RandomStringGenerator.Builder().withinRange('a', 'z').build();
     }
 }

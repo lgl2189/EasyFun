@@ -1,6 +1,6 @@
 package com.easyfun.util;
 
-import com.easyfun.entity.DataWrapper;
+import com.easyfun.entity.JsonDataWrapper;
 
 /**
  * @author ：李冠良
@@ -11,15 +11,31 @@ import com.easyfun.entity.DataWrapper;
 
 public class JsonDataWrapperUtil {
 
-    public static DataWrapper success(Object data) {
+    public static JsonDataWrapper success(Object data) {
         return create(data,"200","成功");
     }
 
-    public static DataWrapper fail(Object data) {
+    public static JsonDataWrapper success(Object data,String message) {
+        return create(data,"200",message);
+    }
+
+    public static JsonDataWrapper success(Object data, String status, String message) {
+        return create(data,status,message);
+    }
+
+    public static JsonDataWrapper fail(Object data) {
         return create(data,"400","失败");
     }
 
-    public static DataWrapper create(Object data,String status,String message) {
-        return new DataWrapper(data,status,message);
+    public static JsonDataWrapper fail(Object data,String message) {
+        return create(data,"400",message);
+    }
+
+    public static JsonDataWrapper fail(Object data, String status, String message) {
+        return create(data,status,message);
+    }
+
+    public static JsonDataWrapper create(Object data, String status, String message) {
+        return new JsonDataWrapper(data,status,message);
     }
 }

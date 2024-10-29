@@ -4,6 +4,7 @@ import com.easyfun.entity.PhonePrefix;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.*;
 
@@ -16,8 +17,13 @@ import java.util.*;
 @Service
 public class CommonService {
 
+    private final PhoneNumberUtil phoneNumberUtil;
+
     @Autowired
-    private PhoneNumberUtil phoneNumberUtil;
+    public CommonService(PhoneNumberUtil phoneNumberUtil) {
+        Assert.notNull(phoneNumberUtil, "phoneNumberUtil must not be null");
+        this.phoneNumberUtil = phoneNumberUtil;
+    }
 
     public ArrayList<PhonePrefix> getPhonePrefixAreaList(){
         List<String> regionsCodes = new ArrayList<>();
