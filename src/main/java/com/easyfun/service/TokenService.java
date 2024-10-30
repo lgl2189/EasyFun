@@ -50,9 +50,9 @@ public class TokenService {
      * 查询token是否存在且未过期
      *
      * @param tokenValue
-     * @return true：存在且未过期；false：不存在或已过期
+     * @return false：存在且未过期；true：不存在或已过期
      */
-    public Boolean searchByToken(String tokenValue) {
+    public Boolean isTokenExpired(String tokenValue) {
         // 根据token查询用户信息
         Token token = tokenMapper.selectByPrimaryKey(tokenValue);
         // 如果token不存在或已过期，则返回false

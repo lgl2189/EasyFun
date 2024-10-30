@@ -1,16 +1,8 @@
 package com.easyfun.controller;
 
-import com.google.gson.GsonBuilder;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author ：李冠良

@@ -1,17 +1,30 @@
+package com.easyfun.controller;
+
+import com.easyfun.entity.JsonDataWrapper;
+import com.easyfun.util.JsonDataWrapperUtil;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author ：李冠良
  * @description： 无描述
- * @date ：2024/10/27 下午2:08
+ * @date ：2024/10/30 下午4:03
  */
 
+@Controller
+@RequestMapping("/anime")
+public class AnimeController {
 
-public class Test {
-
-    public static void main(String[] args) {
+    @GetMapping("/hot/list")
+    public @ResponseBody JsonDataWrapper getHostList() {
+        // TODO: 实现热门番剧列表接口
         ArrayList<Map<String, String>> hotList = new ArrayList<>();
         Map<String, String> hot1 = new HashMap<>();
         hot1.put("name", "尼尔：自动人形");
@@ -34,7 +47,9 @@ public class Test {
             hotItem.put("id", String.valueOf(i));
             i++;
         }
-        System.out.println(hotList);
-    }
+        Map<String,Object> resMap = new HashMap<>();
+        resMap.put("hot_list", hotList);
 
+        return JsonDataWrapperUtil.success_200(resMap);
+    }
 }

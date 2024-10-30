@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,5 +74,15 @@ public class AccountController {
 //            return JsonDataWrapperUtil.success(token);
 //        }
         return JsonDataWrapperUtil.fail_401(null);
+    }
+
+    @PostMapping("/login/token")
+    public @ResponseBody JsonDataWrapper loginByToken(@RequestBody Map<String, String> reqMap) {
+        String loginToken = reqMap.get("account_token");
+        if(!tokenService.isTokenExpired(loginToken)){
+            //token未过期，验证通过
+            return  JsonDataWrapperUtil.success_200(null);
+        }
+        return JsonDataWrapperUtil.fail_402(null);
     }
 }

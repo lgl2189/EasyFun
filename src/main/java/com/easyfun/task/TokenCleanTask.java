@@ -1,6 +1,5 @@
 package com.easyfun.task;
 
-import com.easyfun.mapper.TokenMapper;
 import com.easyfun.mapper.VerificationTokenMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

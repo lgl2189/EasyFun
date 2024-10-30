@@ -1,6 +1,7 @@
 package com.easyfun.mapper;
 
 import com.easyfun.pojo.Token;
+
 import java.util.List;
 
 public interface TokenMapper {
