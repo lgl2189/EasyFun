@@ -22,7 +22,7 @@ import java.util.Random;
  */
 
 @Configuration
-@ComponentScan({"com.easyfun.service","com.easyfun.util"})
+@ComponentScan({"com.easyfun.service","com.easyfun.util","com.easyfun.task"})
 @MapperScan("com.easyfun.mapper")
 @PropertySource("classpath:jdbc.properties")
 public class SpringConfig {

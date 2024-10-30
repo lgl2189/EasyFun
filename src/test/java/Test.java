@@ -13,8 +13,6 @@ import com.google.gson.Gson;
 public class Test {
 
     public static void main(String[] args) {
-        JsonDataWrapper fail = JsonDataWrapperUtil.success(null,"参数为空");
-        System.out.println(new Gson().toJson(fail));
     }
 
 }

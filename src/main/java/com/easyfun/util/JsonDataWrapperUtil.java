@@ -11,28 +11,20 @@ import com.easyfun.entity.JsonDataWrapper;
 
 public class JsonDataWrapperUtil {
 
-    public static JsonDataWrapper success(Object data) {
+    public static JsonDataWrapper success_200(Object data) {
         return create(data,"200","成功");
-    }
-
-    public static JsonDataWrapper success(Object data,String message) {
-        return create(data,"200",message);
-    }
-
-    public static JsonDataWrapper success(Object data, String status, String message) {
-        return create(data,status,message);
     }
 
     public static JsonDataWrapper fail(Object data) {
         return create(data,"400","失败");
     }
 
-    public static JsonDataWrapper fail(Object data,String message) {
-        return create(data,"400",message);
+    public static JsonDataWrapper fail_401(Object data) {
+        return create(data,"401","参数为空");
     }
 
-    public static JsonDataWrapper fail(Object data, String status, String message) {
-        return create(data,status,message);
+    public static JsonDataWrapper fail_402(Object data) {
+        return create(data,"402","参数错误");
     }
 
     public static JsonDataWrapper create(Object data, String status, String message) {

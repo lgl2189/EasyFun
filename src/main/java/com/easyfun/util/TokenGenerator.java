@@ -35,7 +35,7 @@ public class TokenGenerator {
         return randomStringGenerator.generate(ACCOUNT_RANDOM_STR_LENGTH) + zeroPadding + uid;
     }
 
-    public String generateLoginToken() {
+    public String generateVerificationTokenValue() {
         return randomStringGenerator.generate(VERIFY_TOKEN_DEFAULT_LENGTH);
     }
 }

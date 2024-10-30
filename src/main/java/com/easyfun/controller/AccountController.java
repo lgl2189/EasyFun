@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,41 +36,44 @@ public class AccountController {
         this.userService = userService;
     }
 
+    @GetMapping("/login/token")
+    public @ResponseBody JsonDataWrapper getLoginToken() {
+        String loginToken = tokenService.getVerificationToken(LocalDateTime.now().plusHours(6));
+        Map<String, String> resMap = new HashMap<>();
+        resMap.put("login_token", loginToken);
+        return JsonDataWrapperUtil.success_200(resMap);
+    }
+
     @PostMapping("/login/pass")
     public @ResponseBody JsonDataWrapper loginByPass(@RequestBody Map<String, String> reqMap) {
         String phone = reqMap.get("phone");
         String password = reqMap.get("password");
         String loginToken = reqMap.get("login_token");
         // TODO: 校验login_token是否存在于数据库
+        if(!tokenService.isVerificationTokenExist(loginToken)){
+            return JsonDataWrapperUtil.fail_402(null);
+        }
         User user = new User();
         user.setPhone(phone);
         user.setPassword(password);
         Long userId = userService.getUid(user);
         if (userId == null) {
-            return JsonDataWrapperUtil.fail(null, "401", "参数为空");
+            return JsonDataWrapperUtil.fail_402(null);
         }
         String token = tokenService.insertToken(userId);
-        Map<String, String> resMap = new HashMap<String, String>();
+        tokenService.deleteVerificationToken(loginToken);
+        Map<String, String> resMap = new HashMap<>();
         resMap.put("account_token", token);
-        return JsonDataWrapperUtil.success(resMap);
+        return JsonDataWrapperUtil.success_200(resMap);
     }
 
     @PostMapping("/login/phone")
-    public JsonDataWrapper loginByPhone(HttpSession session, @RequestBody Map<String, String> reqMap) {
+    public JsonDataWrapper loginByPhone(@RequestBody Map<String, String> reqMap) {
 //        Long userId = userService.getUid(user);
 //        if(userId != null) {
 //            String token = tokenService.insertToken(userId);
 //            return JsonDataWrapperUtil.success(token);
 //        }
-        return JsonDataWrapperUtil.fail(null, "401", "参数为空");
-    }
-
-    @GetMapping("/loginToken/get")
-    public JsonDataWrapper getLoginToken(HttpSession session) {
-        String loginToken = tokenService.getLoginToken();
-        session.setAttribute("login_token", loginToken);
-        Map<String, String> resMap = new HashMap<String, String>();
-        resMap.put("login_token", loginToken);
-        return JsonDataWrapperUtil.success(resMap);
+        return JsonDataWrapperUtil.fail_401(null);
     }
 }

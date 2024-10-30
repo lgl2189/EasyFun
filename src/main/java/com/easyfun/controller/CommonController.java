@@ -39,7 +39,7 @@ public class CommonController {
         List<PhonePrefix> phonePrefixes = commonService.getPhonePrefixAreaList();
         Map<String, List<PhonePrefix>> map = new HashMap<>();
         map.put("phonePrefixAreaList", phonePrefixes);
-        return JsonDataWrapperUtil.success(map);
+        return JsonDataWrapperUtil.success_200(map);
     }
 
 }

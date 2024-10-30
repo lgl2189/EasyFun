@@ -1,6 +1,7 @@
 package com.easyfun.service;
 
 import com.easyfun.mapper.TokenMapper;
+import com.easyfun.mapper.VerificationTokenMapper;
 import com.easyfun.pojo.Token;
 import com.easyfun.util.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,16 @@ import java.time.LocalDateTime;
 public class TokenService {
 
     private final TokenMapper tokenMapper;
+    private final VerificationTokenMapper verificationTokenMapper;
     private final TokenGenerator tokenGenerator;
 
     @Autowired
-    public TokenService(TokenMapper tokenMapper, TokenGenerator tokenGenerator) {
+    public TokenService(TokenMapper tokenMapper, VerificationTokenMapper verificationTokenMapper, TokenGenerator tokenGenerator) {
         Assert.notNull(tokenMapper, "tokenMapper must not be null");
+        Assert.notNull(verificationTokenMapper, "verificationTokenMapper must not be null");
         Assert.notNull(tokenGenerator, "randomStringGenerator must not be null");
         this.tokenMapper = tokenMapper;
+        this.verificationTokenMapper = verificationTokenMapper;
         this.tokenGenerator = tokenGenerator;
     }
 
@@ -74,10 +78,6 @@ public class TokenService {
         tokenMapper.updateByPrimaryKey(token);
     }
 
-    public String getLoginToken(){
-        return tokenGenerator.generateLoginToken();
-    }
-
     /**
      * 验证登录token是否有效
      *
@@ -88,5 +88,23 @@ public class TokenService {
         LocalDateTime expireDateTime = tokenInfo.getExpireDatetime();
         LocalDateTime now = LocalDateTime.now();
         return expireDateTime.isAfter(now);
+    }
+
+    //verificationToken相关操作
+    public boolean isVerificationTokenExist(String tokenValue) {
+        return verificationTokenMapper.selectByTokenValue(tokenValue) != null;
+    }
+
+    public String getVerificationToken(LocalDateTime expireDatetime) {
+        String tokenValue = tokenGenerator.generateVerificationTokenValue();
+        while (isVerificationTokenExist(tokenValue)) {
+            tokenValue = tokenGenerator.generateVerificationTokenValue();
+        }
+        verificationTokenMapper.insert(tokenValue,expireDatetime);
+        return tokenValue;
+    }
+
+    public void deleteVerificationToken(String tokenValue) {
+        verificationTokenMapper.deleteByTokenValue(tokenValue);
     }
 }
