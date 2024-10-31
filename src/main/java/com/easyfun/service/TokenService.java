@@ -57,15 +57,15 @@ public class TokenService {
         Token token = tokenMapper.selectByPrimaryKey(tokenValue);
         // 如果token不存在或已过期，则返回false
         if (token == null) {
-            return false;
+            return true;
         }
         if (!isTokenActive(token)) {
             tokenMapper.deleteByPrimaryKey(tokenValue);
-            return false;
+            return true;
         }
         // 刷新token的过期时间
         refreshToken(token);
-        return true;
+        return false;
     }
 
     /**

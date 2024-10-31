@@ -49,7 +49,6 @@ public class AnimeController {
         }
         Map<String,Object> resMap = new HashMap<>();
         resMap.put("hot_list", hotList);
-
         return JsonDataWrapperUtil.success_200(resMap);
     }
 }

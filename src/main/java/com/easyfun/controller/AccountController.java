@@ -35,7 +35,7 @@ public class AccountController {
         this.userService = userService;
     }
 
-    @GetMapping("/login/token")
+    @GetMapping("/get/loginToken")
     public @ResponseBody JsonDataWrapper getLoginToken() {
         String loginToken = tokenService.getVerificationToken(LocalDateTime.now().plusHours(6));
         Map<String, String> resMap = new HashMap<>();
