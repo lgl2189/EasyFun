@@ -1,6 +1,7 @@
 package com.easyfun.controller;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
@@ -23,11 +24,17 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
         org.springframework.web.servlet.config.annotation.WebMvcConfigurer.super.addInterceptors(registry);
     }
 
-//    @Override
+    //    @Override
 //    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 //        GsonHttpMessageConverter converter = new GsonHttpMessageConverter();
 //        converter.setGson(new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create());
 //        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
 //        converters.add(converter);
 //    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*");
+    }
 }

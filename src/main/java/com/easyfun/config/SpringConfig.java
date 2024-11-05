@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.sql.DataSource;
 
@@ -24,6 +25,7 @@ import javax.sql.DataSource;
 @ComponentScan({"com.easyfun.service","com.easyfun.util","com.easyfun.task"})
 @MapperScan("com.easyfun.mapper")
 @PropertySource("classpath:jdbc.properties")
+@EnableScheduling
 public class SpringConfig {
     @Bean
     public DataSource dataSource(

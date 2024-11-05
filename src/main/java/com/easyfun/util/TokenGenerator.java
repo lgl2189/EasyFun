@@ -16,12 +16,6 @@ public class TokenGenerator {
 
     private final RandomStringGenerator randomStringGenerator;
 
-    private static final int VERIFY_TOKEN_DEFAULT_LENGTH = 50;
-    private static final int ACCOUNT_RANDOM_STR_LENGTH = 30;
-    private static final int UID_LENGTH = 20;
-
-
-
     @Autowired
     public TokenGenerator(RandomStringGenerator randomStringGenerator) {
         Assert.notNull(randomStringGenerator, "randomStringGenerator must not be null");
@@ -31,11 +25,11 @@ public class TokenGenerator {
     public String generateAccountTokenValue(Long uid) {
         // 生成token值
         int uidLength = String.valueOf(uid).length();
-        String zeroPadding = "0".repeat(UID_LENGTH - uidLength);
-        return randomStringGenerator.generate(ACCOUNT_RANDOM_STR_LENGTH) + zeroPadding + uid;
+        String zeroPadding = "0".repeat(Constant.UID_LENGTH - uidLength);
+        return randomStringGenerator.generate(Constant.ACCOUNT_RANDOM_STR_LENGTH) + zeroPadding + uid;
     }
 
     public String generateVerificationTokenValue() {
-        return randomStringGenerator.generate(VERIFY_TOKEN_DEFAULT_LENGTH);
+        return randomStringGenerator.generate(Constant.VERIFY_TOKEN_DEFAULT_LENGTH);
     }
 }

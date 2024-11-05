@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserMapper {
     int deleteByPrimaryKey(Long uid);
 
-    int insert(User row);
+    int insert(String phone);
 
     User selectByPrimaryKey(Long uid);
 
@@ -18,4 +18,6 @@ public interface UserMapper {
     Long selectUid(User user);
 
     int updateByPrimaryKey(User row);
+
+    String isPhoneExist(String phone);
 }

@@ -12,5 +12,5 @@ public interface VerificationTokenMapper {
 
     int deleteByTokenValue(String tokenValue);
 
-    List<String> deleteExpired();
+    int deleteExpired();
 }

@@ -46,6 +46,14 @@ public class TokenService {
         return token.getTokenValue();
     }
 
+    public boolean deleteToken(String tokenValue) {
+        int effectRow = tokenMapper.deleteByPrimaryKey(tokenValue);
+        if(effectRow != 1){
+            //TODO: 输出日志，记录异常情况
+        }
+        return true;
+    }
+
     /**
      * 查询token是否存在且未过期
      *

@@ -21,6 +21,23 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+    public boolean registerUser(String phone) {
+        if(isPhoneUsed(phone)){
+            return false;
+        }
+        userMapper.insert(phone);
+        return true;
+    }
+
+    /**
+     * 判断手机号是否已注册
+     * @param phone
+     * @return true：已注册；false：未注册
+     */
+    public boolean isPhoneUsed(String phone) {
+        return userMapper.isPhoneExist(phone) != null;
+    }
+
     /**
      * 根据姓名、手机号、邮箱中第一个不为空的参数获取uid
      * @param user 包含用户信息的User对象

@@ -37,4 +37,8 @@
     select token_value, uid, expire_datetime
     from token
   </select>
+  <delete id="deleteExpired">
+    delete from token
+    where expire_datetime &lt; now()
+  </delete>
 </mapper>

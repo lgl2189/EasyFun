@@ -19,4 +19,6 @@ public interface TokenMapper {
      * @return 更新的行数
      */
     int updateByPrimaryKey(Token row);
+
+    int deleteExpired();
 }

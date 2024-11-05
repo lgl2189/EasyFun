@@ -27,6 +27,10 @@ public class JsonDataWrapperUtil {
         return create(data,"402","参数错误");
     }
 
+    public static JsonDataWrapper fail_403(Object data) {
+        return create(data,"403","系统错误");
+    }
+
     public static JsonDataWrapper create(Object data, String status, String message) {
         return new JsonDataWrapper(data,status,message);
     }

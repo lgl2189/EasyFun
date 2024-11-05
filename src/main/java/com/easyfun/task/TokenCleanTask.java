@@ -1,5 +1,6 @@
 package com.easyfun.task;
 
+import com.easyfun.mapper.TokenMapper;
 import com.easyfun.mapper.VerificationTokenMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,15 +17,23 @@ import org.springframework.util.Assert;
 public class TokenCleanTask {
 
     private final VerificationTokenMapper verificationTokenMapper;
+    private final TokenMapper tokenMapper;
 
     @Autowired
-    public TokenCleanTask(VerificationTokenMapper verificationTokenMapper) {
+    public TokenCleanTask(VerificationTokenMapper verificationTokenMapper, TokenMapper tokenMapper) {
         Assert.notNull(verificationTokenMapper, "verificationTokenMapper must not be null");
         this.verificationTokenMapper = verificationTokenMapper;
+        this.tokenMapper = tokenMapper;
     }
 
-    @Scheduled(cron = "0 0 */1 * *")
+    //秒 分 时 日 月 星期
+    @Scheduled(cron = "0 */10 * * * *")
     public void cleanVerificationToken() {
         verificationTokenMapper.deleteExpired();
+    }
+
+    @Scheduled(cron = "0 */10 * * * *")
+    public void cleanToken() {
+        tokenMapper.deleteExpired();
     }
 }
