@@ -92,10 +92,14 @@ public class TokenService {
      * @param tokenInfo 要验证的登录token的信息
      * @return true：有效；false：无效，token已过期
      */
-    private boolean isTokenActive(@NonNull Token tokenInfo) {
+    public boolean isTokenActive(@NonNull Token tokenInfo) {
         LocalDateTime expireDateTime = tokenInfo.getExpireDatetime();
         LocalDateTime now = LocalDateTime.now();
         return expireDateTime.isAfter(now);
+    }
+
+    public Long getUidByToken(@NonNull String tokenValue) {
+        return tokenMapper.selectByPrimaryKey(tokenValue).getUid();
     }
 
     //verificationToken相关操作

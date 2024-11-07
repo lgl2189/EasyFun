@@ -28,18 +28,15 @@ public class AccountController {
 
     private final TokenService tokenService;
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @Autowired
-    public AccountController(TokenService tokenService, UserService userService) {
+    public AccountController(TokenService tokenService, UserService userService, UserMapper userMapper) {
         Assert.notNull(tokenService, "tokenService must not be null");
         Assert.notNull(userService, "userService must not be null");
         this.tokenService = tokenService;
         this.userService = userService;
-    }
-
-    @PostMapping("/register")
-    public @ResponseBody JsonDataWrapper register(@RequestBody Map<String, String> reqMap) {
-        return JsonDataWrapperUtil.success_200(null);
+        this.userMapper = userMapper;
     }
 
     @GetMapping("/get/loginToken")
@@ -59,14 +56,18 @@ public class AccountController {
         if (!tokenService.isVerificationTokenExist(loginToken)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
+        //校验密码是否正确
         User user = new User();
         user.setPhone(phone);
-        user.setPassword(password);
-        Long userId = userService.getUid(user);
-        if (userId == null) {
+        Long uid = userService.getUid(user);
+        //TODO:返回不同信息
+        if (uid == null) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        String token = tokenService.insertToken(userId);
+        if (!userService.isPasswordRight(uid, password)) {
+            return JsonDataWrapperUtil.fail_402(null);
+        }
+        String token = tokenService.insertToken(uid);
         tokenService.deleteVerificationToken(loginToken);
         Map<String, String> resMap = new HashMap<>();
         resMap.put("account_token", token);
@@ -82,24 +83,24 @@ public class AccountController {
         if (!tokenService.isVerificationTokenExist(loginToken)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        //校验手机号是否已使用
-        if (!userService.registerUser(phone)) {
-            //手机号已使用
-            return JsonDataWrapperUtil.fail_402(null);
-        }
+        //校验手机号是否已注册
+        boolean isPhoneUsed = userService.registerUser(phone);
         //校验验证码是否正确
-        if(!verificationCode.equals("1234")){
+        if (!verificationCode.equals("1234")) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         User user = new User();
         user.setPhone(phone);
-        Long userId = userService.getUid(user);
-        if (userId == null) {
+        Long uid = userService.getUid(user);
+        if (uid == null) {
             return JsonDataWrapperUtil.fail_403(null);
         }
-        String token = tokenService.insertToken(userId);
+        String token = tokenService.insertToken(uid);
         tokenService.deleteVerificationToken(loginToken);
+        boolean hasPassword = userService.hasPassword(uid);
         Map<String, String> resMap = new HashMap<>();
+        resMap.put("new_user", String.valueOf(!isPhoneUsed));
+        resMap.put("has_password", String.valueOf(hasPassword));
         resMap.put("account_token", token);
         return JsonDataWrapperUtil.success_200(resMap);
     }
@@ -107,11 +108,26 @@ public class AccountController {
     @PostMapping("/login/token")
     public @ResponseBody JsonDataWrapper loginByToken(@RequestBody Map<String, String> reqMap) {
         String loginToken = reqMap.get("account_token");
-        if (!tokenService.isTokenExpired(loginToken)) {
-            //token未过期，验证通过
-            return JsonDataWrapperUtil.success_200(null);
+        if (tokenService.isTokenExpired(loginToken)) {
+            return JsonDataWrapperUtil.fail_402(null);
         }
-        return JsonDataWrapperUtil.fail_402(null);
+        //token未过期，验证通过
+        return JsonDataWrapperUtil.success_200(null);
+    }
+
+    @PostMapping("/change/password")
+    public @ResponseBody JsonDataWrapper changePassword(@RequestBody Map<String, String> reqMap) {
+        String accountToken = reqMap.get("account_token");
+        String password = reqMap.get("password");
+        Long uid = tokenService.getUidByToken(accountToken);
+        if (uid == null) {
+            return JsonDataWrapperUtil.fail_402(null);
+        }
+        if (!userService.changePassword(uid, UserService.DEFAULT_PASSWORD, password)) {
+            return JsonDataWrapperUtil.fail_402(null);
+        }
+        ;
+        return JsonDataWrapperUtil.success_200(null);
     }
 
     @PostMapping("/logout")

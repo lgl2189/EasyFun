@@ -11,6 +11,7 @@
     <title>Index</title>
 </head>
 <body>
-
+<h4>jsp</h4>
+<h4>${result}</h4>
 </body>
 </html>

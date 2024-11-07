@@ -34,12 +34,10 @@ public class CommonController {
     }
 
     @GetMapping("/phonePrefixAreaList")
-    @ResponseBody
-    public JsonDataWrapper phonePrefixAreaList(){
+    public @ResponseBody JsonDataWrapper phonePrefixAreaList(){
         List<PhonePrefix> phonePrefixes = commonService.getPhonePrefixAreaList();
         Map<String, List<PhonePrefix>> map = new HashMap<>();
         map.put("phonePrefixAreaList", phonePrefixes);
         return JsonDataWrapperUtil.success_200(map);
     }
-
 }

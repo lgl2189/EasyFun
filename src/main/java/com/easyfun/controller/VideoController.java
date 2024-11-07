@@ -1,7 +1,11 @@
 package com.easyfun.controller;
 
+import com.easyfun.entity.JsonDataWrapper;
+import com.easyfun.util.JsonDataWrapperUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author ：李冠良
@@ -12,5 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/video")
 public class VideoController {
+    @GetMapping("randomVideo")
+    public @ResponseBody JsonDataWrapper getRandomVideo(Integer num, String type) {
 
+
+        return JsonDataWrapperUtil.success_200(null);
+    }
 }

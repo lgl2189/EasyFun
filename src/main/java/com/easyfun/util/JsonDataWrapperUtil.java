@@ -11,27 +11,47 @@ import com.easyfun.entity.JsonDataWrapper;
 
 public class JsonDataWrapperUtil {
 
-    public static JsonDataWrapper success_200(Object data) {
-        return create(data,"200","成功");
+    public static JsonDataWrapper success_200(Object data, String message) {
+        return create(data, "200", message);
     }
 
-    public static JsonDataWrapper fail(Object data) {
-        return create(data,"400","失败");
+    public static JsonDataWrapper success_200(Object data) {
+        return success_200(data, "成功");
+    }
+
+    public static JsonDataWrapper fail_400(Object data, String message) {
+        return create(data, "400", "失败");
+    }
+
+    public static JsonDataWrapper fail_400(Object data) {
+        return fail_400(data, "失败");
+    }
+
+    public static JsonDataWrapper fail_401(Object data, String message) {
+        return create(data, "401", message);
     }
 
     public static JsonDataWrapper fail_401(Object data) {
-        return create(data,"401","参数为空");
+        return fail_401(data, "参数为空");
+    }
+
+    public static JsonDataWrapper fail_402(Object data, String message) {
+        return create(data, "402", message);
     }
 
     public static JsonDataWrapper fail_402(Object data) {
-        return create(data,"402","参数错误");
+        return fail_402(data, "参数错误");
+    }
+
+    public static JsonDataWrapper fail_403(Object data, String message) {
+        return create(data, "403", message);
     }
 
     public static JsonDataWrapper fail_403(Object data) {
-        return create(data,"403","系统错误");
+        return fail_403(data, "系统错误");
     }
 
     public static JsonDataWrapper create(Object data, String status, String message) {
-        return new JsonDataWrapper(data,status,message);
+        return new JsonDataWrapper(data, status, message);
     }
 }
