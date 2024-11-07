@@ -23,6 +23,6 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.easyfun.mapper" targetProject="src/main/java"/>
 
-        <table tableName="verification_token"/>
+        <table tableName="video"/>
     </context>
 </generatorConfiguration>

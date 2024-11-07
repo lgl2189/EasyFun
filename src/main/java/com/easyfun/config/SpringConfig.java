@@ -44,6 +44,7 @@ public class SpringConfig {
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTypeHandlersPackage("org.apache.ibatis.type");
         return sqlSessionFactoryBean;
     }
 

@@ -1,9 +1,11 @@
 package com.easyfun.mapper;
 
 import com.easyfun.pojo.Token;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface TokenMapper {
     int deleteByPrimaryKey(String token);
 

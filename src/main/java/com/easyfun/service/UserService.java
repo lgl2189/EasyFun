@@ -2,6 +2,7 @@ package com.easyfun.service;
 
 import com.easyfun.mapper.UserMapper;
 import com.easyfun.pojo.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -18,6 +19,7 @@ public class UserService {
 
     public static final String DEFAULT_PASSWORD = "";
 
+    @Autowired
     public UserService(UserMapper userMapper) {
         Assert.notNull(userMapper, "userMapper must not be null");
         this.userMapper = userMapper;
