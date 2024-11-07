@@ -31,10 +31,4 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
 //        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
 //        converters.add(converter);
 //    }
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*");
-    }
 }

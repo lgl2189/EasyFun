@@ -1,9 +1,12 @@
 package com.easyfun.config;
 
+import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.util.Enumeration;
 
 /**
  * @author ：李冠良
@@ -12,7 +15,7 @@ import java.sql.DriverManager;
  */
 
 
-public class CleanServletContextListener implements ServletContextListener{
+public class CleanServletContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -24,18 +27,17 @@ public class CleanServletContextListener implements ServletContextListener{
     public void contextDestroyed(ServletContextEvent sce) {
         //应用销毁时的操作
         try {
-            Class.forName("com.alibaba.druid.proxy.DruidDriver").asSubclass(Driver.class);
-            Driver driver = (Driver) Class.forName("com.alibaba.druid.proxy.DruidDriver").newInstance();
-            DriverManager.deregisterDriver(driver);
-        } catch (Exception e) {
+            System.out.println("注销JDBC驱动");
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+            while (drivers.hasMoreElements()) {
+                Driver driver = (Driver) drivers.nextElement();
+                DriverManager.deregisterDriver(driver);
+                System.out.println("注销JDBC驱动: " + driver);
+            }
+            AbandonedConnectionCleanupThread.uncheckedShutdown();
+        }catch (Exception e){
             e.printStackTrace();
-        }
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver").asSubclass(Driver.class);
-            Driver driver = (Driver) Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            DriverManager.deregisterDriver(driver);
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("注销JDBC驱动异常");
         }
     }
 }
