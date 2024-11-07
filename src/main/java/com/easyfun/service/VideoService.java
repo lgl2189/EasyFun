@@ -1,9 +1,12 @@
 package com.easyfun.service;
 
 import com.easyfun.mapper.VideoMapper;
+import com.easyfun.pojo.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * @author ：李冠良
@@ -14,11 +17,21 @@ import org.springframework.util.Assert;
 @Service
 public class VideoService {
 
+    public enum VideoInfoType{
+        SIMPLE,
+        FULL
+    }
+
     private final VideoMapper videoMapper;
+
 
     @Autowired
     public VideoService(VideoMapper videoMapper) {
         Assert.notNull(videoMapper, "videoMapper must not be null");
         this.videoMapper = videoMapper;
+    }
+
+    public List<Video> getRecommendVideoList(int num, VideoInfoType type){
+        return videoMapper.selectAll();
     }
 }

@@ -37,6 +37,19 @@ public class SpringConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+
+        // 设置连接池参数
+//        dataSource.setInitialSize(5);
+//        dataSource.setMinIdle(5);
+//        dataSource.setMaxActive(20);
+//        dataSource.setMaxWait(60000);
+//        dataSource.setTimeBetweenEvictionRunsMillis(60000);
+//        dataSource.setMinEvictableIdleTimeMillis(300000);
+//        dataSource.setValidationQuery("SELECT 1");
+//        dataSource.setTestWhileIdle(true);
+//        dataSource.setTestOnBorrow(false);
+//        dataSource.setTestOnReturn(false);
+
         return dataSource;
     }
 
@@ -44,7 +57,7 @@ public class SpringConfig {
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeHandlersPackage("org.apache.ibatis.type");
+//        sqlSessionFactoryBean.setTypeHandlersPackage("org.apache.ibatis.type");
         return sqlSessionFactoryBean;
     }
 

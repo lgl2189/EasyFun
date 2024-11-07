@@ -1,7 +1,6 @@
 package com.easyfun.pojo;
 
 import java.util.Date;
-import java.util.Map;
 
 public class Video {
     private Long vid;
@@ -38,7 +37,7 @@ public class Video {
 
     private String coverPath;
 
-    private Map<String, String> tagList;
+    private String tagList;
 
     private String commentList;
 
@@ -180,11 +179,11 @@ public class Video {
         this.coverPath = coverPath;
     }
 
-    public Map<String, String> getTagList() {
+    public String getTagList() {
         return tagList;
     }
 
-    public void setTagList(Map<String, String> tagList) {
+    public void setTagList(String tagList) {
         this.tagList = tagList;
     }
 
@@ -202,5 +201,31 @@ public class Video {
 
     public void setDanmakuList(String danmakuList) {
         this.danmakuList = danmakuList;
+    }
+
+    @Override
+    public String toString() {
+        return "Video{" +
+                "vid=" + vid +
+                ", videoPath='" + videoPath + '\'' +
+                ", title='" + title + '\'' +
+                ", publisherId=" + publisherId +
+                ", publisherName='" + publisherName + '\'' +
+                ", likeNum=" + likeNum +
+                ", coinNum=" + coinNum +
+                ", favoriteNum=" + favoriteNum +
+                ", shareNum=" + shareNum +
+                ", viewNum=" + viewNum +
+                ", danmakuNum=" + danmakuNum +
+                ", commentNum=" + commentNum +
+                ", publishDatetime=" + publishDatetime +
+                ", isOriginal=" + isOriginal +
+                ", introduction='" + introduction + '\'' +
+                ", videoDuration=" + videoDuration +
+                ", coverPath='" + coverPath + '\'' +
+                ", tagList='" + tagList + '\'' +
+                ", commentList='" + commentList + '\'' +
+                ", danmakuList='" + danmakuList + '\'' +
+                '}';
     }
 }

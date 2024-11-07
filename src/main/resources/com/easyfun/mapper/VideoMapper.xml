@@ -19,7 +19,7 @@
     <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="video_duration" jdbcType="TIME" property="videoDuration" />
     <result column="cover_path" jdbcType="VARCHAR" property="coverPath" />
-    <result column="tag_list" jdbcType="JAVA_OBJECT"  property="tagList" />
+    <result column="tag_list" jdbcType="LONGVARCHAR"  property="tagList" />
     <result column="comment_list" jdbcType="LONGVARCHAR" property="commentList" />
     <result column="danmaku_list" jdbcType="LONGVARCHAR" property="danmakuList" />
   </resultMap>

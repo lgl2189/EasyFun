@@ -28,7 +28,6 @@ public class AccountController {
 
     private final TokenService tokenService;
     private final UserService userService;
-    private final UserMapper userMapper;
 
     @Autowired
     public AccountController(TokenService tokenService, UserService userService, UserMapper userMapper) {
@@ -36,7 +35,6 @@ public class AccountController {
         Assert.notNull(userService, "userService must not be null");
         this.tokenService = tokenService;
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
     @GetMapping("/get/loginToken")
