@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfun.mapper.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.easyfun.pojo.Video">
+    <id column="vid" jdbcType="BIGINT" property="vid" />
+    <result column="video_path" jdbcType="VARCHAR" property="videoPath" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="publisher_id" jdbcType="BIGINT" property="publisherId" />
+    <result column="publisher_name" jdbcType="VARCHAR" property="publisherName" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="coin_num" jdbcType="INTEGER" property="coinNum" />
+    <result column="favorite_num" jdbcType="INTEGER" property="favoriteNum" />
+    <result column="share_num" jdbcType="INTEGER" property="shareNum" />
+    <result column="view_num" jdbcType="INTEGER" property="viewNum" />
+    <result column="danmaku_num" jdbcType="INTEGER" property="danmakuNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="publish_datetime" jdbcType="TIMESTAMP" property="publishDatetime" />
+    <result column="is_original" jdbcType="BIT" property="isOriginal" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="video_duration" jdbcType="TIME" property="videoDuration" />
+    <result column="cover_path" jdbcType="VARCHAR" property="coverPath" />
+    <result column="tag_list" jdbcType="LONGVARCHAR"  property="tagList" />
+    <result column="comment_list" jdbcType="LONGVARCHAR" property="commentList" />
+    <result column="danmaku_list" jdbcType="LONGVARCHAR" property="danmakuList" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from video
+    where vid = #{vid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.easyfun.pojo.Video">
+    insert into video (vid, video_path, title, 
+      publisher_id, publisher_name, like_num, 
+      coin_num, favorite_num, share_num, 
+      view_num, danmaku_num, comment_num, 
+      publish_datetime, is_original, introduction, 
+      video_duration, cover_path, tag_list, 
+      comment_list, danmaku_list)
+    values (#{vid,jdbcType=BIGINT}, #{videoPath,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{publisherId,jdbcType=BIGINT}, #{publisherName,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER}, 
+      #{coinNum,jdbcType=INTEGER}, #{favoriteNum,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER}, 
+      #{viewNum,jdbcType=INTEGER}, #{danmakuNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
+      #{publishDatetime,jdbcType=TIMESTAMP}, #{isOriginal,jdbcType=BIT}, #{introduction,jdbcType=VARCHAR}, 
+      #{videoDuration,jdbcType=TIME}, #{coverPath,jdbcType=VARCHAR}, #{tagList,jdbcType=LONGVARCHAR}, 
+      #{commentList,jdbcType=LONGVARCHAR}, #{danmakuList,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.Video">
+    update video
+    set video_path = #{videoPath,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      publisher_id = #{publisherId,jdbcType=BIGINT},
+      publisher_name = #{publisherName,jdbcType=VARCHAR},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      coin_num = #{coinNum,jdbcType=INTEGER},
+      favorite_num = #{favoriteNum,jdbcType=INTEGER},
+      share_num = #{shareNum,jdbcType=INTEGER},
+      view_num = #{viewNum,jdbcType=INTEGER},
+      danmaku_num = #{danmakuNum,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      publish_datetime = #{publishDatetime,jdbcType=TIMESTAMP},
+      is_original = #{isOriginal,jdbcType=BIT},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      video_duration = #{videoDuration,jdbcType=TIME},
+      cover_path = #{coverPath,jdbcType=VARCHAR},
+      tag_list = #{tagList,jdbcType=LONGVARCHAR},
+      comment_list = #{commentList,jdbcType=LONGVARCHAR},
+      danmaku_list = #{danmakuList,jdbcType=LONGVARCHAR}
+    where vid = #{vid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select vid, video_path, title, publisher_id, publisher_name, like_num, coin_num, 
+    favorite_num, share_num, view_num, danmaku_num, comment_num, publish_datetime, is_original, 
+    introduction, video_duration, cover_path, tag_list, comment_list, danmaku_list
+    from video
+    where vid = #{vid,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select vid, video_path, title, publisher_id, publisher_name, like_num, coin_num, 
+    favorite_num, share_num, view_num, danmaku_num, comment_num, publish_datetime, is_original, 
+    introduction, video_duration, cover_path, tag_list, comment_list, danmaku_list
+    from video
+  </select>
+</mapper>
