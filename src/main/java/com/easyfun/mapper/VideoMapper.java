@@ -13,6 +13,8 @@ public interface VideoMapper {
 
     Video selectByPrimaryKey(Long vid);
 
+    List<Video> selectRandomVideoSimple(int count);
+
     List<Video> selectAll();
 
     int updateByPrimaryKey(Video row);

@@ -1,6 +1,7 @@
 package com.easyfun.pojo;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Video {
     private Long vid;
@@ -27,13 +28,13 @@ public class Video {
 
     private Integer commentNum;
 
-    private Date publishDatetime;
+    private LocalDateTime publishDatetime;
 
     private Boolean isOriginal;
 
     private String introduction;
 
-    private Date videoDuration;
+    private LocalTime videoDuration;
 
     private String coverPath;
 
@@ -139,11 +140,11 @@ public class Video {
         this.commentNum = commentNum;
     }
 
-    public Date getPublishDatetime() {
+    public LocalDateTime getPublishDatetime() {
         return publishDatetime;
     }
 
-    public void setPublishDatetime(Date publishDatetime) {
+    public void setPublishDatetime(LocalDateTime publishDatetime) {
         this.publishDatetime = publishDatetime;
     }
 
@@ -163,11 +164,11 @@ public class Video {
         this.introduction = introduction;
     }
 
-    public Date getVideoDuration() {
+    public LocalTime getVideoDuration() {
         return videoDuration;
     }
 
-    public void setVideoDuration(Date videoDuration) {
+    public void setVideoDuration(LocalTime videoDuration) {
         this.videoDuration = videoDuration;
     }
 

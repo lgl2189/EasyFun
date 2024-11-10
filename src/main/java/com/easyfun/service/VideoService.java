@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class VideoService {
 
-    public enum VideoInfoType{
+    public enum VideoInfoType {
         SIMPLE,
         FULL
     }
@@ -31,7 +31,14 @@ public class VideoService {
         this.videoMapper = videoMapper;
     }
 
-    public List<Video> getRecommendVideoList(int num, VideoInfoType type){
-        return videoMapper.selectAll();
+    public Video getVideoByVid(Long vid) {
+        return videoMapper.selectByPrimaryKey(vid);
+    }
+
+    public List<Video> getRecommendVideoList(int num, VideoInfoType type) {
+        return switch (type) {
+            case SIMPLE -> videoMapper.selectRandomVideoSimple(num);
+            default -> null;
+        };
     }
 }

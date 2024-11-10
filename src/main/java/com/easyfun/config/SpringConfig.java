@@ -1,7 +1,13 @@
 package com.easyfun.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.easyfun.json.LocalDateTimeDeserializer;
+import com.easyfun.json.LocalDateTimeSerializer;
+import com.easyfun.json.LocalTimeDeserializer;
+import com.easyfun.json.LocalTimeSerializer;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.apache.commons.text.RandomStringGenerator;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -11,9 +17,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.sql.DataSource;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * @author ：李冠良
@@ -57,13 +66,25 @@ public class SpringConfig {
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-//        sqlSessionFactoryBean.setTypeHandlersPackage("org.apache.ibatis.type");
         return sqlSessionFactoryBean;
     }
 
     @Bean
     public Gson gson(){
-        return new Gson();
+        return new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
+                .registerTypeAdapter(LocalTime.class, new LocalTimeSerializer())
+                .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
+                .create();
+    }
+
+    @Bean
+    public GsonHttpMessageConverter gsonHttpMessageConverter() {
+        GsonHttpMessageConverter converter = new GsonHttpMessageConverter();
+        converter.setGson(gson());
+        return converter;
     }
 
     @Bean

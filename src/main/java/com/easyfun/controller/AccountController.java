@@ -6,7 +6,6 @@ import com.easyfun.pojo.User;
 import com.easyfun.service.TokenService;
 import com.easyfun.service.UserService;
 import com.easyfun.util.JsonDataWrapperUtil;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;

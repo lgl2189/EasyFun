@@ -12,5 +12,6 @@ public class Constant {
     public static final int VERIFY_TOKEN_DEFAULT_LENGTH = 50;
     public static final int ACCOUNT_RANDOM_STR_LENGTH = 30;
     public static final int UID_LENGTH = 18;
+    public static final int VID_LENGTH = 18;
 
 }
