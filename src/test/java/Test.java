@@ -1,13 +1,4 @@
-import com.easyfun.json.LocalDateTimeDeserializer;
-import com.easyfun.json.LocalDateTimeSerializer;
-import com.easyfun.json.LocalTimeDeserializer;
-import com.easyfun.json.LocalTimeSerializer;
-import com.easyfun.pojo.Video;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import com.easyfun.util.VideoTranscoder;
 
 /**
  * @author ：李冠良
@@ -19,37 +10,23 @@ import java.time.LocalTime;
 public class Test {
 
     public static void main(String[] args) {
-        Video video = new Video();
-        video.setVid(225L);
-        video.setVideoPath("1");
-        video.setTitle("Mr.");
-        video.setPublisherId(199L);
-        video.setPublisherName("Ikeda Eita");
-        video.setLikeNum(64);
-        video.setCoinNum(869);
-        video.setFavoriteNum(675);
-        video.setShareNum(738);
-        video.setViewNum(501);
-        video.setDanmakuNum(null);
-        video.setCommentNum(107);
-        video.setPublishDatetime(LocalDateTime.of(2024, 10, 24, 22, 17, 56));
-        video.setIsOriginal(false);
-        video.setIntroduction("JDBUNQVKDA");
-        video.setVideoDuration(LocalTime.of(11, 12, 29));
-        video.setCoverPath("0tYWLQnYwK");
-        video.setTagList("{}");
-        video.setCommentList(null);
-        video.setDanmakuList(null);
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
-                .registerTypeAdapter(LocalTime.class, new LocalTimeSerializer())
-                .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
-                .create();
-
-        String json = gson.toJson(video);
-        System.out.println(json);
+        try {
+            String inputPath = "C:\\Users\\12145\\Desktop\\sample.mp4";
+            // 低清晰度 (360p, 400kbps)
+            VideoTranscoder.transcode(inputPath, "C:\\Users\\12145\\Desktop\\360.mp4", 640, 360, 400 * 1000);
+            // 中等清晰度 (480p, 800kbps)
+            VideoTranscoder.transcode(inputPath, "C:\\Users\\12145\\Desktop\\480.mp4", 854, 480, 800 * 1000);
+            // 高清晰度 (720p, 1500kbps)
+            VideoTranscoder.transcode(inputPath, "C:\\Users\\12145\\Desktop\\720.mp4", 1280, 720, 1500 * 1000);
+            // 高清晰度 (720p, 1500kbps)
+            VideoTranscoder.transcode(inputPath, "C:\\Users\\12145\\Desktop\\720.mp4", 1920, 1080, 1500 * 1000);
+            // 超高清晰度 (1080p, 3000kbps)
+            VideoTranscoder.transcode(inputPath, "C:\\Users\\12145\\Desktop\\1080.mp4", 1920, 1080, 3000 * 1000);
+            System.out.println("Transcoding completed successfully.");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

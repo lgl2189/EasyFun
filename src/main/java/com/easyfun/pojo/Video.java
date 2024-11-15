@@ -32,7 +32,7 @@ public class Video {
 
     private Boolean isOriginal;
 
-    private String introduction;
+    private String description;
 
     private LocalTime videoDuration;
 
@@ -156,12 +156,12 @@ public class Video {
         this.isOriginal = isOriginal;
     }
 
-    public String getIntroduction() {
-        return introduction;
+    public String getDescription() {
+        return description;
     }
 
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalTime getVideoDuration() {
@@ -221,7 +221,7 @@ public class Video {
                 ", commentNum=" + commentNum +
                 ", publishDatetime=" + publishDatetime +
                 ", isOriginal=" + isOriginal +
-                ", introduction='" + introduction + '\'' +
+                ", introduction='" + description + '\'' +
                 ", videoDuration=" + videoDuration +
                 ", coverPath='" + coverPath + '\'' +
                 ", tagList='" + tagList + '\'' +
