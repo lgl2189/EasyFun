@@ -1,9 +1,10 @@
 package com.easyfun.pojo;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class Video {
     private Long vid;
@@ -40,11 +41,11 @@ public class Video {
 
     private String coverPath;
 
-    private ArrayList<String> tagList;
+    private JsonArray tagList;
 
-    private String commentList;
+    private JsonObject commentList;
 
-    private String danmakuList;
+    private JsonObject danmakuList;
 
     public Long getVid() {
         return vid;
@@ -182,27 +183,27 @@ public class Video {
         this.coverPath = coverPath;
     }
 
-    public ArrayList<String> getTagList() {
+    public JsonArray getTagList() {
         return tagList;
     }
 
-    public void setTagList(ArrayList<String> tagList) {
+    public void setTagList(JsonArray tagList) {
         this.tagList = tagList;
     }
 
-    public String getCommentList() {
+    public JsonObject getCommentList() {
         return commentList;
     }
 
-    public void setCommentList(String commentList) {
+    public void setCommentList(JsonObject commentList) {
         this.commentList = commentList;
     }
 
-    public String getDanmakuList() {
+    public JsonObject getDanmakuList() {
         return danmakuList;
     }
 
-    public void setDanmakuList(String danmakuList) {
+    public void setDanmakuList(JsonObject danmakuList) {
         this.danmakuList = danmakuList;
     }
 
