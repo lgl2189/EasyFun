@@ -16,10 +16,10 @@
         <result column="comment_num" jdbcType="INTEGER" property="commentNum"/>
         <result column="publish_datetime" jdbcType="TIMESTAMP" property="publishDatetime"/>
         <result column="is_original" jdbcType="BIT" property="isOriginal"/>
-        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="video_duration" jdbcType="TIME" property="videoDuration"/>
         <result column="cover_path" jdbcType="VARCHAR" property="coverPath"/>
-        <result column="tag_list" jdbcType="LONGVARCHAR" property="tagList"/>
+        <result column="tag_list" jdbcType="JAVA_OBJECT" property="tagList"/>
         <result column="comment_list" jdbcType="LONGVARCHAR" property="commentList"/>
         <result column="danmaku_list" jdbcType="LONGVARCHAR" property="danmakuList"/>
     </resultMap>
@@ -33,14 +33,14 @@
                            publisher_id, publisher_name, like_num,
                            coin_num, favorite_num, share_num,
                            view_num, danmaku_num, comment_num,
-                           publish_datetime, is_original, introduction,
+                           publish_datetime, is_original, description,
                            video_duration, cover_path, tag_list,
                            comment_list, danmaku_list)
         values (#{vid,jdbcType=BIGINT}, #{videoPath,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
                 #{publisherId,jdbcType=BIGINT}, #{publisherName,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER},
                 #{coinNum,jdbcType=INTEGER}, #{favoriteNum,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER},
                 #{viewNum,jdbcType=INTEGER}, #{danmakuNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER},
-                #{publishDatetime,jdbcType=TIMESTAMP}, #{isOriginal,jdbcType=BIT}, #{introduction,jdbcType=VARCHAR},
+                #{publishDatetime,jdbcType=TIMESTAMP}, #{isOriginal,jdbcType=BIT}, #{description,jdbcType=VARCHAR},
                 #{videoDuration,jdbcType=TIME}, #{coverPath,jdbcType=VARCHAR}, #{tagList,jdbcType=LONGVARCHAR},
                 #{commentList,jdbcType=LONGVARCHAR}, #{danmakuList,jdbcType=LONGVARCHAR})
     </insert>
@@ -59,7 +59,7 @@
             comment_num      = #{commentNum,jdbcType=INTEGER},
             publish_datetime = #{publishDatetime,jdbcType=TIMESTAMP},
             is_original      = #{isOriginal,jdbcType=BIT},
-            introduction     = #{introduction,jdbcType=VARCHAR},
+            description     = #{description,jdbcType=VARCHAR},
             video_duration   = #{videoDuration,jdbcType=TIME},
             cover_path       = #{coverPath,jdbcType=VARCHAR},
             tag_list         = #{tagList,jdbcType=LONGVARCHAR},
@@ -82,7 +82,7 @@
                comment_num,
                publish_datetime,
                is_original,
-               introduction,
+               description,
                video_duration,
                cover_path,
                tag_list,
@@ -106,7 +106,7 @@
                danmaku_num,
                publish_datetime,
                is_original,
-               introduction,
+               description,
                video_duration,
                cover_path
         from video
@@ -128,7 +128,7 @@
                comment_num,
                publish_datetime,
                is_original,
-               introduction,
+               description,
                video_duration,
                cover_path,
                tag_list,

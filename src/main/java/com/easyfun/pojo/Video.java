@@ -2,6 +2,8 @@ package com.easyfun.pojo;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Video {
     private Long vid;
@@ -38,7 +40,7 @@ public class Video {
 
     private String coverPath;
 
-    private String tagList;
+    private ArrayList<String> tagList;
 
     private String commentList;
 
@@ -180,11 +182,11 @@ public class Video {
         this.coverPath = coverPath;
     }
 
-    public String getTagList() {
+    public ArrayList<String> getTagList() {
         return tagList;
     }
 
-    public void setTagList(String tagList) {
+    public void setTagList(ArrayList<String> tagList) {
         this.tagList = tagList;
     }
 

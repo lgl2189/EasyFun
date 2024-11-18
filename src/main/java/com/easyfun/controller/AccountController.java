@@ -20,7 +20,7 @@ import java.util.Map;
  * @description： 无描述
  * @date ：2024/10/24 下午5:27
  */
-
+//@RestController //等于@Controller和在所有方法上添加@ResponseBody注解
 @Controller
 @RequestMapping("/account")
 public class AccountController {

@@ -1,10 +1,11 @@
 package com.easyfun.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.easyfun.json.LocalDateTimeDeserializer;
-import com.easyfun.json.LocalDateTimeSerializer;
-import com.easyfun.json.LocalTimeDeserializer;
-import com.easyfun.json.LocalTimeSerializer;
+import com.easyfun.typehandler.gson.LocalDateTimeDeserializer;
+import com.easyfun.typehandler.gson.LocalDateTimeSerializer;
+import com.easyfun.typehandler.gson.LocalTimeDeserializer;
+import com.easyfun.typehandler.gson.LocalTimeSerializer;
+import com.easyfun.typehandler.mybatis.JsonToList;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,6 +24,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author ：李冠良
@@ -31,7 +34,7 @@ import java.time.LocalTime;
  */
 
 @Configuration
-@ComponentScan({"com.easyfun.service","com.easyfun.util","com.easyfun.task"})
+@ComponentScan({"com.easyfun.service","com.easyfun.util","com.easyfun.task","com.easyfun.typehandler"})
 @MapperScan("com.easyfun.mapper")
 @PropertySource("classpath:jdbc.properties")
 @EnableScheduling
@@ -66,6 +69,7 @@ public class SpringConfig {
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource){
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTypeHandlers(new JsonToList(gson()));
         return sqlSessionFactoryBean;
     }
 

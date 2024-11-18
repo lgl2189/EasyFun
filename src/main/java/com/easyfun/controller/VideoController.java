@@ -110,6 +110,7 @@ public class VideoController {
         Video video = videoService.getVideoByVid(vid);
         Map<String, Video> resMap = new HashMap<>();
         resMap.put("video_info", video);
+//        System.out.println("video_info: " + video);
         return JsonDataWrapperUtil.success_200(resMap);
     }
 

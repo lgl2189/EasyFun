@@ -1,4 +1,4 @@
-package com.easyfun.json;
+package com.easyfun.typehandler.gson;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
