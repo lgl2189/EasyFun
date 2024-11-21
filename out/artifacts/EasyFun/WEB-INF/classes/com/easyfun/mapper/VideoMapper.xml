@@ -20,7 +20,7 @@
         <result column="video_duration" jdbcType="TIME" property="videoDuration"/>
         <result column="cover_path" jdbcType="VARCHAR" property="coverPath"/>
         <result column="tag_list" jdbcType="JAVA_OBJECT" property="tagList"/>
-        <result column="comment_list" jdbcType="LONGVARCHAR" property="commentList"/>
+        <result column="comment_aid" jdbcType="BIGINT" property="commentAid"/>
         <result column="danmaku_list" jdbcType="LONGVARCHAR" property="danmakuList"/>
     </resultMap>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -35,14 +35,14 @@
                            view_num, danmaku_num, comment_num,
                            publish_datetime, is_original, description,
                            video_duration, cover_path, tag_list,
-                           comment_list, danmaku_list)
+                           comment_aid, danmaku_list)
         values (#{vid,jdbcType=BIGINT}, #{videoPath,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
                 #{publisherId,jdbcType=BIGINT}, #{publisherName,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER},
                 #{coinNum,jdbcType=INTEGER}, #{favoriteNum,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER},
                 #{viewNum,jdbcType=INTEGER}, #{danmakuNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER},
                 #{publishDatetime,jdbcType=TIMESTAMP}, #{isOriginal,jdbcType=BIT}, #{description,jdbcType=VARCHAR},
                 #{videoDuration,jdbcType=TIME}, #{coverPath,jdbcType=VARCHAR}, #{tagList,jdbcType=LONGVARCHAR},
-                #{commentList,jdbcType=LONGVARCHAR}, #{danmakuList,jdbcType=LONGVARCHAR})
+                #{commentAid,jdbcType=BIGINT}, #{danmakuList,jdbcType=LONGVARCHAR})
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.Video">
         update video
@@ -63,7 +63,7 @@
             video_duration   = #{videoDuration,jdbcType=TIME},
             cover_path       = #{coverPath,jdbcType=VARCHAR},
             tag_list         = #{tagList,jdbcType=LONGVARCHAR},
-            comment_list     = #{commentList,jdbcType=LONGVARCHAR},
+            comment_aid     = #{commentAid,jdbcType=BIGINT},
             danmaku_list     = #{danmakuList,jdbcType=LONGVARCHAR}
         where vid = #{vid,jdbcType=BIGINT}
     </update>
@@ -86,7 +86,7 @@
                video_duration,
                cover_path,
                tag_list,
-               comment_list,
+               comment_aid,
                danmaku_list
         from video
         where vid = #{vid,jdbcType=BIGINT}
@@ -132,7 +132,7 @@
                video_duration,
                cover_path,
                tag_list,
-               comment_list,
+               comment_aid,
                danmaku_list
         from video
     </select>

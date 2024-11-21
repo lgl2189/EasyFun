@@ -29,12 +29,12 @@ public class AnimeController {
         hot1.put("name", "尼尔：自动人形");
         hot1.put("score", "9.5");
         hot1.put("update","更新至第三话");
-        hot1.put("src","src/assets/images/anime_cover1.avif");
+        hot1.put("src","/src/assets/images/anime_cover1.avif");
         Map<String, String> hot2 = new HashMap<>();
         hot2.put("name", "鹿乃子乃子乃子虎视眈眈");
         hot2.put("score", "9.5");
         hot2.put("update","更新至第三话");
-        hot2.put("src","src/assets/images/anime_cover2.avif");
+        hot2.put("src","/src/assets/images/anime_cover2.avif");
         hotList.add(new HashMap<>(hot1));
         hotList.add(new HashMap<>(hot2));
         hotList.add(new HashMap<>(hot1));

@@ -43,7 +43,7 @@ public class Video {
 
     private JsonArray tagList;
 
-    private JsonObject commentList;
+    private Long commentAid;
 
     private JsonObject danmakuList;
 
@@ -191,12 +191,12 @@ public class Video {
         this.tagList = tagList;
     }
 
-    public JsonObject getCommentList() {
-        return commentList;
+    public Long getCommentList() {
+        return commentAid;
     }
 
-    public void setCommentList(JsonObject commentList) {
-        this.commentList = commentList;
+    public void setCommentList(Long commentList) {
+        this.commentAid = commentList;
     }
 
     public JsonObject getDanmakuList() {
@@ -228,7 +228,7 @@ public class Video {
                 ", videoDuration=" + videoDuration +
                 ", coverPath='" + coverPath + '\'' +
                 ", tagList='" + tagList + '\'' +
-                ", commentList='" + commentList + '\'' +
+                ", commentList='" + commentAid + '\'' +
                 ", danmakuList='" + danmakuList + '\'' +
                 '}';
     }
