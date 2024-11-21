@@ -33,8 +33,6 @@ import java.util.Map;
 @RequestMapping("/video")
 public class VideoController {
 
-    private static final String SAMPLE_VIDEO_PATH = "C:\\Users\\12145\\Desktop\\Easy_Fun\\测试视频\\sample.mp4";
-
     private final VideoService videoService;
 
     public VideoController(VideoService videoService) {
@@ -44,9 +42,21 @@ public class VideoController {
 
     @GetMapping(value = "")
     public ResponseEntity<Resource> getVideo(@RequestHeader(value = "Range", required = false) String range,
-                                             @RequestParam("path") String path) {
+                                             @RequestParam("vid") String vid) {
+        //获取视频路径
+        if (vid == null || vid.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        long vidLong;
+        try {
+            vidLong = Long.parseLong(vid);
+        }
+        catch (NumberFormatException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        String path = String.valueOf(videoService.getVideoPath(vidLong));
         //获取视频文件
-        File file = new File(SAMPLE_VIDEO_PATH);
+        File file = new File(path);
         if (!file.exists()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

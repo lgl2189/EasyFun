@@ -91,6 +91,9 @@
         from video
         where vid = #{vid,jdbcType=BIGINT}
     </select>
+    <select id="selectVideoUrlByPrimaryKey" parameterType="java.lang.Long" resultType="java.lang.String">
+        select video_path from video where vid = #{vid,jdbcType=BIGINT}
+    </select>
     <select id="selectRandomVideoSimple" parameterType="int" resultMap="BaseResultMap">
         select vid,
                video_path,

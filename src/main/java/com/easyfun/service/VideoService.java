@@ -41,4 +41,8 @@ public class VideoService {
             default -> null;
         };
     }
+
+    public String getVideoPath(Long vid){
+        return videoMapper.selectVideoUrlByPrimaryKey(vid);
+    }
 }
