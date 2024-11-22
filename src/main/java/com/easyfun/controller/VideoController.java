@@ -4,6 +4,7 @@ import com.easyfun.entity.JsonDataWrapper;
 import com.easyfun.pojo.Video;
 import com.easyfun.service.VideoService;
 import com.easyfun.util.JsonDataWrapperUtil;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -81,7 +82,7 @@ public class VideoController {
         }
         try {
             byte[] data = readFile(file, start, end);
-            InputStreamResource resource = new InputStreamResource(new ByteArrayInputStream(data));
+            ByteArrayResource resource = new ByteArrayResource(data);
             String contentLength = String.valueOf(end - start + 1);
             String contentRange = "bytes " + start + "-" + end + "/" + fileSize;
             if (range != null) {

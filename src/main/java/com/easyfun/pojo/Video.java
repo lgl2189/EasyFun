@@ -39,7 +39,7 @@ public class Video {
 
     private LocalTime videoDuration;
 
-    private String coverPath;
+    private String coverUuid;
 
     private JsonArray tagList;
 
@@ -175,12 +175,12 @@ public class Video {
         this.videoDuration = videoDuration;
     }
 
-    public String getCoverPath() {
-        return coverPath;
+    public String getCoverUuid() {
+        return coverUuid;
     }
 
-    public void setCoverPath(String coverPath) {
-        this.coverPath = coverPath;
+    public void setCoverUuid(String coverUuid) {
+        this.coverUuid = coverUuid;
     }
 
     public JsonArray getTagList() {
@@ -226,7 +226,7 @@ public class Video {
                 ", isOriginal=" + isOriginal +
                 ", introduction='" + description + '\'' +
                 ", videoDuration=" + videoDuration +
-                ", coverPath='" + coverPath + '\'' +
+                ", coverPath='" + coverUuid + '\'' +
                 ", tagList='" + tagList + '\'' +
                 ", commentList='" + commentAid + '\'' +
                 ", danmakuList='" + danmakuList + '\'' +

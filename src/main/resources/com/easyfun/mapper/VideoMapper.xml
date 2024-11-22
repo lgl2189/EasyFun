@@ -18,7 +18,7 @@
         <result column="is_original" jdbcType="BIT" property="isOriginal"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="video_duration" jdbcType="TIME" property="videoDuration"/>
-        <result column="cover_path" jdbcType="VARCHAR" property="coverPath"/>
+        <result column="cover_uuid" jdbcType="VARCHAR" property="coverUuid"/>
         <result column="tag_list" jdbcType="JAVA_OBJECT" property="tagList"/>
         <result column="comment_aid" jdbcType="BIGINT" property="commentAid"/>
         <result column="danmaku_list" jdbcType="LONGVARCHAR" property="danmakuList"/>
@@ -34,14 +34,14 @@
                            coin_num, favorite_num, share_num,
                            view_num, danmaku_num, comment_num,
                            publish_datetime, is_original, description,
-                           video_duration, cover_path, tag_list,
+                           video_duration, cover_uuid, tag_list,
                            comment_aid, danmaku_list)
         values (#{vid,jdbcType=BIGINT}, #{videoPath,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
                 #{publisherId,jdbcType=BIGINT}, #{publisherName,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER},
                 #{coinNum,jdbcType=INTEGER}, #{favoriteNum,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER},
                 #{viewNum,jdbcType=INTEGER}, #{danmakuNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER},
                 #{publishDatetime,jdbcType=TIMESTAMP}, #{isOriginal,jdbcType=BIT}, #{description,jdbcType=VARCHAR},
-                #{videoDuration,jdbcType=TIME}, #{coverPath,jdbcType=VARCHAR}, #{tagList,jdbcType=LONGVARCHAR},
+                #{videoDuration,jdbcType=TIME}, #{coverUuid,jdbcType=VARCHAR}, #{tagList,jdbcType=LONGVARCHAR},
                 #{commentAid,jdbcType=BIGINT}, #{danmakuList,jdbcType=LONGVARCHAR})
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.Video">
@@ -61,7 +61,7 @@
             is_original      = #{isOriginal,jdbcType=BIT},
             description     = #{description,jdbcType=VARCHAR},
             video_duration   = #{videoDuration,jdbcType=TIME},
-            cover_path       = #{coverPath,jdbcType=VARCHAR},
+            cover_uuid       = #{coverUuid,jdbcType=VARCHAR},
             tag_list         = #{tagList,jdbcType=LONGVARCHAR},
             comment_aid     = #{commentAid,jdbcType=BIGINT},
             danmaku_list     = #{danmakuList,jdbcType=LONGVARCHAR}
@@ -84,7 +84,7 @@
                is_original,
                description,
                video_duration,
-               cover_path,
+               cover_uuid,
                tag_list,
                comment_aid,
                danmaku_list
@@ -111,7 +111,7 @@
                is_original,
                description,
                video_duration,
-               cover_path
+               cover_uuid
         from video
         order by rand()
         limit #{count,jdbcType=INTEGER}
@@ -133,7 +133,7 @@
                is_original,
                description,
                video_duration,
-               cover_path,
+               cover_uuid,
                tag_list,
                comment_aid,
                danmaku_list
