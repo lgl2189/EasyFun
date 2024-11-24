@@ -1,133 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.easyfun.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.easyfun.pojo.User">
-    <id column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="gender" jdbcType="INTEGER" property="gender" />
-    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
-    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
-    <result column="signature" jdbcType="VARCHAR" property="signature" />
-    <result column="vip_status" jdbcType="BIT" property="vipStatus" />
-    <result column="level" jdbcType="INTEGER" property="level" />
-    <result column="exp" jdbcType="INTEGER" property="exp" />
-    <result column="coin" jdbcType="INTEGER" property="coin" />
-    <result column="follower" jdbcType="INTEGER" property="follower" />
-    <result column="attention" jdbcType="INTEGER" property="attention" />
-    <result column="post_number" jdbcType="INTEGER" property="postNumber" />
-    <result column="now_tag" jdbcType="BIGINT" property="nowTag" />
-    <result column="like_number" jdbcType="INTEGER" property="likeNumber" />
-    <result column="view_number" jdbcType="INTEGER" property="viewNumber" />
-    <result column="avatar_path" jdbcType="VARCHAR" property="avatarPath" />
-    <result column="ip_pos" jdbcType="LONGVARCHAR" property="ipPos" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from user
-    where uid = #{uid,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="string">
-    insert into user (phone)
-    values (#{phone,jdbcType=VARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.User">
-    update user
-    <set>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=INTEGER},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="schoolName != null">
-        school_name = #{schoolName,jdbcType=VARCHAR},
-      </if>
-      <if test="signature != null">
-        signature = #{signature,jdbcType=VARCHAR},
-      </if>
-      <if test="vipStatus != null">
-        vip_status = #{vipStatus,jdbcType=BIT},
-      </if>
-      <if test="level != null">
-        level = #{level,jdbcType=INTEGER},
-      </if>
-      <if test="exp != null">
-        exp = #{exp,jdbcType=INTEGER},
-      </if>
-      <if test="coin != null">
-        coin = #{coin,jdbcType=INTEGER},
-      </if>
-      <if test="follower != null">
-        follower = #{follower,jdbcType=INTEGER},
-      </if>
-      <if test="attention != null">
-        attention = #{attention,jdbcType=INTEGER},
-      </if>
-      <if test="postNumber != null">
-        post_number = #{postNumber,jdbcType=INTEGER},
-      </if>
-      <if test="nowTag != null">
-        now_tag = #{nowTag,jdbcType=BIGINT},
-      </if>
-      <if test="likeNumber != null">
-        like_number = #{likeNumber,jdbcType=INTEGER},
-      </if>
-      <if test="viewNumber != null">
-        view_number = #{viewNumber,jdbcType=INTEGER},
-      </if>
-      <if test="avatarPath != null">
-        avatar_path = #{avatarPath,jdbcType=VARCHAR},
-      </if>
-      <if test="ipPos != null">
-        ip_pos = #{ipPos,jdbcType=LONGVARCHAR}
-      </if>
-    </set>
-    where uid = #{uid,jdbcType=BIGINT}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select uid, name, password, phone, email, gender, birthday, school_name, signature, vip_status,
-    level, exp, coin, follower, attention, post_number, now_tag, like_number, view_number, 
-    avatar_path, ip_pos
-    from user
-    where uid = #{uid,jdbcType=BIGINT}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select uid, name, password, phone, email, gender, birthday, school_name, signature, vip_status,
-    level, exp, coin, follower, attention, post_number, now_tag, like_number, view_number,
-    avatar_path, ip_pos
-    from user
-  </select>
-  <select id="selectUid" parameterType="com.easyfun.pojo.User" resultType="java.lang.Long">
-    select uid from user
-    <where>
-      <choose>
-        <when test="name != null and name != ''">
-          and name = #{name}
-        </when>
-        <when test="phone != null and phone != ''">
-          and phone = #{phone}
-        </when>
-        <when test="email != null and email != ''">
-          and email = #{email}
-        </when>
-      </choose>
-    </where>
-  </select>
-  <select id="isPhoneExist" resultType="string">
-    select phone from user where phone = #{phone}
-  </select>
+    <resultMap id="BaseResultMap" type="com.easyfun.pojo.User">
+        <id column="uid" jdbcType="BIGINT" property="uid"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="gender" jdbcType="INTEGER" property="gender"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        <result column="signature" jdbcType="VARCHAR" property="signature"/>
+        <result column="vip_status" jdbcType="BIT" property="vipStatus"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="exp" jdbcType="INTEGER" property="exp"/>
+        <result column="coin" jdbcType="INTEGER" property="coin"/>
+        <result column="follower" jdbcType="INTEGER" property="follower"/>
+        <result column="attention" jdbcType="INTEGER" property="attention"/>
+        <result column="post_number" jdbcType="INTEGER" property="postNumber"/>
+        <result column="now_tag" jdbcType="BIGINT" property="nowTag"/>
+        <result column="like_number" jdbcType="INTEGER" property="likeNumber"/>
+        <result column="view_number" jdbcType="INTEGER" property="viewNumber"/>
+        <result column="avatar_path" jdbcType="VARCHAR" property="avatarPath"/>
+        <result column="ip_pos" jdbcType="LONGVARCHAR" property="ipPos"/>
+        <result column="tag_list" jdbcType="JAVA_OBJECT" property="tagList"/>
+        <result column="follow_list" jdbcType="JAVA_OBJECT" property="followList"/>
+        <result column="attention_list" jdbcType="JAVA_OBJECT" property="attentionList"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from user
+        where uid = #{uid,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="string">
+        insert into user (phone)
+        values (#{phone,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.User">
+        update user
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="schoolName != null">
+                school_name = #{schoolName,jdbcType=VARCHAR},
+            </if>
+            <if test="signature != null">
+                signature = #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="vipStatus != null">
+                vip_status = #{vipStatus,jdbcType=BIT},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="exp != null">
+                exp = #{exp,jdbcType=INTEGER},
+            </if>
+            <if test="coin != null">
+                coin = #{coin,jdbcType=INTEGER},
+            </if>
+            <if test="follower != null">
+                follower = #{follower,jdbcType=INTEGER},
+            </if>
+            <if test="attention != null">
+                attention = #{attention,jdbcType=INTEGER},
+            </if>
+            <if test="postNumber != null">
+                post_number = #{postNumber,jdbcType=INTEGER},
+            </if>
+            <if test="nowTag != null">
+                now_tag = #{nowTag,jdbcType=BIGINT},
+            </if>
+            <if test="likeNumber != null">
+                like_number = #{likeNumber,jdbcType=INTEGER},
+            </if>
+            <if test="viewNumber != null">
+                view_number = #{viewNumber,jdbcType=INTEGER},
+            </if>
+            <if test="avatarPath != null">
+                avatar_path = #{avatarPath,jdbcType=VARCHAR},
+            </if>
+            <if test="ipPos != null">
+                ip_pos = #{ipPos,jdbcType=LONGVARCHAR}
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from user where uid = #{uid,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select uid,
+               name,
+               password,
+               phone,
+               email,
+               gender,
+               birthday,
+               school_name,
+               signature,
+               vip_status,
+               level,
+               exp,
+               coin,
+               follower,
+               attention,
+               post_number,
+               now_tag,
+               like_number,
+               view_number,
+               avatar_path,
+               ip_pos
+        from user
+    </select>
+    <select id="selectUid" parameterType="com.easyfun.pojo.User" resultType="java.lang.Long">
+        select uid from user
+        <where>
+            <choose>
+                <when test="name != null and name != ''">
+                    and name = #{name}
+                </when>
+                <when test="phone != null and phone != ''">
+                    and phone = #{phone}
+                </when>
+                <when test="email != null and email != ''">
+                    and email = #{email}
+                </when>
+            </choose>
+        </where>
+    </select>
+    <select id="isPhoneExist" resultType="string">
+        select phone
+        from user
+        where phone = #{phone}
+    </select>
+    <select id="selectUserInfoPublic" resultMap="BaseResultMap">
+        select uid,
+               name,
+               gender,
+               birthday,
+               school_name,
+               signature,
+               vip_status,
+               level,
+               exp,
+               coin,
+               follower,
+               attention,
+               post_number,
+               now_tag,
+               ip_pos,
+               like_number,
+               view_number,
+               avatar_path
+        from user
+        where uid = #{uid,jdbcType=BIGINT}
+    </select>
 </mapper>

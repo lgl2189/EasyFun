@@ -20,4 +20,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User row);
 
     String isPhoneExist(String phone);
+
+    User selectUserInfoPublic(Long uid);
 }

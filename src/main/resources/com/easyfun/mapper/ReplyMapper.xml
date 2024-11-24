@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfun.mapper.ReplyMapper">
+  <resultMap id="BaseResultMap" type="com.easyfun.pojo.Reply">
+    <id column="rpid" jdbcType="BIGINT" property="rpid" />
+    <result column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="mid" jdbcType="BIGINT" property="mid" />
+    <result column="root" jdbcType="BIGINT" property="root" />
+    <result column="parent" jdbcType="BIGINT" property="parent" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="reply_num" jdbcType="INTEGER" property="replyNum" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from reply
+    where rpid = #{rpid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.easyfun.pojo.Reply">
+    insert into reply (rpid, oid, status, 
+      mid, root, parent, ctime, 
+      like_num, dislike_num, content, 
+      type, reply_num)
+    values (#{rpid,jdbcType=BIGINT}, #{oid,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, 
+      #{mid,jdbcType=BIGINT}, #{root,jdbcType=BIGINT}, #{parent,jdbcType=BIGINT}, #{ctime,jdbcType=TIMESTAMP}, 
+      #{likeNum,jdbcType=INTEGER}, #{dislikeNum,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{type,jdbcType=CHAR}, #{replyNum,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.Reply">
+    update reply
+    set oid = #{oid,jdbcType=BIGINT},
+      status = #{status,jdbcType=CHAR},
+      mid = #{mid,jdbcType=BIGINT},
+      root = #{root,jdbcType=BIGINT},
+      parent = #{parent,jdbcType=BIGINT},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      dislike_num = #{dislikeNum,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR},
+      reply_num = #{replyNum,jdbcType=INTEGER}
+    where rpid = #{rpid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select*
+    from reply
+    where rpid = #{rpid,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from reply
+  </select>
+  <select id="selectAllFirstReply" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from reply where oid = #{oid,jdbcType=BIGINT} and root = 0
+  </select>
+  <select id="selectPartFirstReply" parameterType="map" resultMap="BaseResultMap">
+    select * from reply where oid = #{oid,jdbcType=BIGINT} and root = 0
+    limit #{num,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectPartSecondaryReply" parameterType="map" resultMap="BaseResultMap">
+    SELECT *
+    FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY parent ORDER BY oid) AS row_num
+    FROM reply
+    WHERE oid = #{oid,jdbcType=BIGINT} AND root != 0
+    ) t
+    WHERE t.row_num &lt;= #{num,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllSecondaryReply" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from reply where oid = #{oid,jdbcType=BIGINT} and parent != 0
+  </select>
+
+  <select id="selectAllSpecificSecondaryReply" parameterType="map" resultMap="BaseResultMap">
+    select * from reply where oid = #{oid,jdbcType=BIGINT} and root = #{root,jdbcType=BIGINT} and parent != 0
+  </select>
+
+  <select id="selectPartSpecificSecondaryReply" parameterType="map" resultMap="BaseResultMap">
+    select * from reply where oid = #{oid,jdbcType=BIGINT} and root = #{root,jdbcType=BIGINT} and parent != 0
+    limit #{num,jdbcType=INTEGER}
+  </select>
+</mapper>

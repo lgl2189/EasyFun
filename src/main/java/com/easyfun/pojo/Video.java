@@ -191,12 +191,12 @@ public class Video {
         this.tagList = tagList;
     }
 
-    public Long getCommentList() {
+    public Long getCommentAid() {
         return commentAid;
     }
 
-    public void setCommentList(Long commentList) {
-        this.commentAid = commentList;
+    public void setCommentAid(Long commentAid) {
+        this.commentAid = commentAid;
     }
 
     public JsonObject getDanmakuList() {

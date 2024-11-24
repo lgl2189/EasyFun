@@ -3,8 +3,8 @@ package com.easyfun.controller;
 import com.easyfun.entity.JsonDataWrapper;
 import com.easyfun.mapper.UserMapper;
 import com.easyfun.pojo.User;
+import com.easyfun.service.AccountService;
 import com.easyfun.service.TokenService;
-import com.easyfun.service.UserService;
 import com.easyfun.util.JsonDataWrapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,14 +26,14 @@ import java.util.Map;
 public class AccountController {
 
     private final TokenService tokenService;
-    private final UserService userService;
+    private final AccountService accountService;
 
     @Autowired
-    public AccountController(TokenService tokenService, UserService userService, UserMapper userMapper) {
+    public AccountController(TokenService tokenService, AccountService accountService, UserMapper userMapper) {
         Assert.notNull(tokenService, "tokenService must not be null");
-        Assert.notNull(userService, "userService must not be null");
+        Assert.notNull(accountService, "userService must not be null");
         this.tokenService = tokenService;
-        this.userService = userService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/get/loginToken")
@@ -56,12 +56,12 @@ public class AccountController {
         //校验密码是否正确
         User user = new User();
         user.setPhone(phone);
-        Long uid = userService.getUid(user);
+        Long uid = accountService.getUid(user);
         //TODO:返回不同信息
         if (uid == null) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        if (!userService.isPasswordRight(uid, password)) {
+        if (!accountService.isPasswordRight(uid, password)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         String token = tokenService.insertToken(uid);
@@ -81,20 +81,20 @@ public class AccountController {
             return JsonDataWrapperUtil.fail_402(null);
         }
         //校验手机号是否已注册
-        boolean isPhoneUsed = userService.registerUser(phone);
+        boolean isPhoneUsed = accountService.registerUser(phone);
         //校验验证码是否正确
         if (!verificationCode.equals("1234")) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         User user = new User();
         user.setPhone(phone);
-        Long uid = userService.getUid(user);
+        Long uid = accountService.getUid(user);
         if (uid == null) {
             return JsonDataWrapperUtil.fail_403(null);
         }
         String token = tokenService.insertToken(uid);
         tokenService.deleteVerificationToken(loginToken);
-        boolean hasPassword = userService.hasPassword(uid);
+        boolean hasPassword = accountService.hasPassword(uid);
         Map<String, String> resMap = new HashMap<>();
         resMap.put("new_user", String.valueOf(!isPhoneUsed));
         resMap.put("has_password", String.valueOf(hasPassword));
@@ -120,7 +120,7 @@ public class AccountController {
         if (uid == null) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        if (!userService.changePassword(uid, UserService.DEFAULT_PASSWORD, password)) {
+        if (!accountService.changePassword(uid, AccountService.DEFAULT_PASSWORD, password)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         ;

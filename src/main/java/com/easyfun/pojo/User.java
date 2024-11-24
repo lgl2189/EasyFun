@@ -1,5 +1,7 @@
 package com.easyfun.pojo;
 
+import com.google.gson.JsonArray;
+
 import java.util.Date;
 
 public class User {
@@ -44,6 +46,12 @@ public class User {
     private String avatarPath;
 
     private String ipPos;
+
+    public JsonArray tagList;
+
+    public JsonArray followList;
+
+    public JsonArray attentionList;
 
     public Long getUid() {
         return uid;
@@ -211,6 +219,30 @@ public class User {
 
     public void setIpPos(String ipPos) {
         this.ipPos = ipPos;
+    }
+
+    public JsonArray getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(JsonArray tagList) {
+        this.tagList = tagList;
+    }
+
+    public JsonArray getFollowList() {
+        return followList;
+    }
+
+    public void setFollowList(JsonArray followList) {
+        this.followList = followList;
+    }
+
+    public JsonArray getAttentionList() {
+        return attentionList;
+    }
+
+    public void setAttentionList(JsonArray attentionList) {
+        this.attentionList = attentionList;
     }
 
     @Override

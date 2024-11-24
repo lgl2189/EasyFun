@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfun.mapper.CommentAreaMapper">
+  <resultMap id="BaseResultMap" type="com.easyfun.pojo.CommentArea">
+    <id column="caid" jdbcType="BIGINT" property="caid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from comment_area
+    where caid = #{caid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.easyfun.pojo.CommentArea">
+    insert into comment_area (caid, type)
+    values (#{caid,jdbcType=BIGINT}, #{type,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.CommentArea">
+    update comment_area
+    set type = #{type,jdbcType=INTEGER}
+    where caid = #{caid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select caid, type
+    from comment_area
+    where caid = #{caid,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select caid, type
+    from comment_area
+  </select>
+</mapper>

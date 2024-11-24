@@ -1,15 +1,10 @@
 package com.easyfun.service;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author ：李冠良
@@ -25,11 +20,11 @@ public class ImageService {
     /**
      * 获取封面图片
      *
-     * @param coverImageUuid 封面图片的UUID，用于构建文件路径
+     * @param imageUuid 封面图片的UUID，用于构建文件路径
      * @return 返回值为null表示封面图片不存在
      */
-    public byte[] getCoverImage(String coverImageUuid) {
-        String imagePath = COVER_IMAGE_PATH + coverImageUuid + ".avif";
+    public byte[] getImage(String imageUuid) {
+        String imagePath = COVER_IMAGE_PATH + imageUuid + ".avif";
         File file = new File(imagePath);
         if (!file.exists()) {
             return null;
