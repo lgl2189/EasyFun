@@ -2,6 +2,7 @@ package com.easyfun.controller;
 
 import com.easyfun.entity.JsonDataWrapper;
 import com.easyfun.pojo.User;
+import com.easyfun.service.TokenService;
 import com.easyfun.service.UserService;
 import com.easyfun.util.JsonDataWrapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,14 @@ import java.util.Map;
 public class UserController {
 
     private UserService userService;
+    private TokenService tokenService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, TokenService tokenService){
         Assert.notNull(userService, "userService must not be null");
+        Assert.notNull(tokenService, "tokenService must not be null");
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     @RequestMapping("/info/public")
@@ -46,13 +50,16 @@ public class UserController {
 
     @RequestMapping("/info/private")
     @ResponseBody
-    public JsonDataWrapper getUserInfoPrivate(@RequestParam("uid") Long uid,@RequestParam("token") Long token){
+    public JsonDataWrapper getUserInfoPrivate(@RequestParam("uid") Long uid,@RequestParam("accountToken") String token){
         //TODO: 需要验证用户权限，使用token
+        if(tokenService.isTokenExpired(token)){
+            return JsonDataWrapperUtil.fail_402(null);
+        }
         User user = userService.getUserInfoPrivate(uid);
         if(user == null){
             return JsonDataWrapperUtil.fail_402(null);
         }
-        Map<String,User> resMap = new HashMap<String,User>();
+        Map<String,User> resMap = new HashMap<>();
         resMap.put("user_info", user);
         return JsonDataWrapperUtil.success_200(resMap);
     }

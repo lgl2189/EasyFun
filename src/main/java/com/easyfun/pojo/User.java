@@ -31,19 +31,19 @@ public class User {
 
     private Integer coin;
 
-    private Integer follower;
+    private Integer followerNum;
 
-    private Integer attention;
+    private Integer attentionNum;
 
-    private Integer postNumber;
+    private Integer postNum;
 
     private Long nowTag;
 
-    private Integer likeNumber;
+    private Integer likeNum;
 
-    private Integer viewNumber;
+    private Integer viewNum;
 
-    private String avatarPath;
+    private String avatarUuid;
 
     private String ipPos;
 
@@ -157,28 +157,28 @@ public class User {
         this.coin = coin;
     }
 
-    public Integer getFollower() {
-        return follower;
+    public Integer getFollowerNum() {
+        return followerNum;
     }
 
-    public void setFollower(Integer follower) {
-        this.follower = follower;
+    public void setFollowerNum(Integer followerNum) {
+        this.followerNum = followerNum;
     }
 
-    public Integer getAttention() {
-        return attention;
+    public Integer getAttentionNum() {
+        return attentionNum;
     }
 
-    public void setAttention(Integer attention) {
-        this.attention = attention;
+    public void setAttentionNum(Integer attentionNum) {
+        this.attentionNum = attentionNum;
     }
 
-    public Integer getPostNumber() {
-        return postNumber;
+    public Integer getPostNum() {
+        return postNum;
     }
 
-    public void setPostNumber(Integer postNumber) {
-        this.postNumber = postNumber;
+    public void setPostNum(Integer postNum) {
+        this.postNum = postNum;
     }
 
     public Long getNowTag() {
@@ -189,28 +189,28 @@ public class User {
         this.nowTag = nowTag;
     }
 
-    public Integer getLikeNumber() {
-        return likeNumber;
+    public Integer getLikeNum() {
+        return likeNum;
     }
 
-    public void setLikeNumber(Integer likeNumber) {
-        this.likeNumber = likeNumber;
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
     }
 
-    public Integer getViewNumber() {
-        return viewNumber;
+    public Integer getViewNum() {
+        return viewNum;
     }
 
-    public void setViewNumber(Integer viewNumber) {
-        this.viewNumber = viewNumber;
+    public void setViewNum(Integer viewNum) {
+        this.viewNum = viewNum;
     }
 
-    public String getAvatarPath() {
-        return avatarPath;
+    public String getAvatarUuid() {
+        return avatarUuid;
     }
 
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
+    public void setAvatarUuid(String avatarUuid) {
+        this.avatarUuid = avatarUuid;
     }
 
     public String getIpPos() {
@@ -252,6 +252,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", gender=" + gender +
                 ", birthday=" + birthday +
                 ", schoolName='" + schoolName + '\'' +
@@ -260,14 +261,17 @@ public class User {
                 ", level=" + level +
                 ", exp=" + exp +
                 ", coin=" + coin +
-                ", follower=" + follower +
-                ", attention=" + attention +
-                ", postNumber=" + postNumber +
+                ", followerNum=" + followerNum +
+                ", attentionNum=" + attentionNum +
+                ", postNum=" + postNum +
                 ", nowTag=" + nowTag +
-                ", likeNumber=" + likeNumber +
-                ", viewNumber=" + viewNumber +
-                ", avatarPath='" + avatarPath + '\'' +
+                ", likeNum=" + likeNum +
+                ", viewNum=" + viewNum +
+                ", avatarUuid='" + avatarUuid + '\'' +
                 ", ipPos='" + ipPos + '\'' +
+                ", tagList=" + tagList +
+                ", followList=" + followList +
+                ", attentionList=" + attentionList +
                 '}';
     }
 }

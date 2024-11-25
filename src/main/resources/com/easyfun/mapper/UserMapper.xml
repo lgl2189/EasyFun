@@ -15,13 +15,13 @@
         <result column="level" jdbcType="INTEGER" property="level"/>
         <result column="exp" jdbcType="INTEGER" property="exp"/>
         <result column="coin" jdbcType="INTEGER" property="coin"/>
-        <result column="follower" jdbcType="INTEGER" property="follower"/>
-        <result column="attention" jdbcType="INTEGER" property="attention"/>
-        <result column="post_number" jdbcType="INTEGER" property="postNumber"/>
+        <result column="follower_num" jdbcType="INTEGER" property="followerNum"/>
+        <result column="attention_num" jdbcType="INTEGER" property="attentionNum"/>
+        <result column="post_num" jdbcType="INTEGER" property="postNum"/>
         <result column="now_tag" jdbcType="BIGINT" property="nowTag"/>
-        <result column="like_number" jdbcType="INTEGER" property="likeNumber"/>
-        <result column="view_number" jdbcType="INTEGER" property="viewNumber"/>
-        <result column="avatar_path" jdbcType="VARCHAR" property="avatarPath"/>
+        <result column="like_num" jdbcType="INTEGER" property="likeNum"/>
+        <result column="view_num" jdbcType="INTEGER" property="viewNum"/>
+        <result column="avatar_uuid" jdbcType="VARCHAR" property="avatarUuid"/>
         <result column="ip_pos" jdbcType="LONGVARCHAR" property="ipPos"/>
         <result column="tag_list" jdbcType="JAVA_OBJECT" property="tagList"/>
         <result column="follow_list" jdbcType="JAVA_OBJECT" property="followList"/>
@@ -75,26 +75,26 @@
             <if test="coin != null">
                 coin = #{coin,jdbcType=INTEGER},
             </if>
-            <if test="follower != null">
-                follower = #{follower,jdbcType=INTEGER},
+            <if test="follower_num != null">
+                follower_num = #{followerNum,jdbcType=INTEGER},
             </if>
-            <if test="attention != null">
-                attention = #{attention,jdbcType=INTEGER},
+            <if test="attention_num != null">
+                attention_num = #{attentionNum,jdbcType=INTEGER},
             </if>
-            <if test="postNumber != null">
-                post_number = #{postNumber,jdbcType=INTEGER},
+            <if test="postNum != null">
+                post_num = #{postNum,jdbcType=INTEGER},
             </if>
             <if test="nowTag != null">
                 now_tag = #{nowTag,jdbcType=BIGINT},
             </if>
-            <if test="likeNumber != null">
-                like_number = #{likeNumber,jdbcType=INTEGER},
+            <if test="likeNum != null">
+                like_num = #{likeNum,jdbcType=INTEGER},
             </if>
-            <if test="viewNumber != null">
-                view_number = #{viewNumber,jdbcType=INTEGER},
+            <if test="viewNum != null">
+                view_num = #{viewNum,jdbcType=INTEGER},
             </if>
-            <if test="avatarPath != null">
-                avatar_path = #{avatarPath,jdbcType=VARCHAR},
+            <if test="avatarUuid != null">
+                avatar_uuid = #{avatarUuid,jdbcType=VARCHAR},
             </if>
             <if test="ipPos != null">
                 ip_pos = #{ipPos,jdbcType=LONGVARCHAR}
@@ -119,13 +119,13 @@
                level,
                exp,
                coin,
-               follower,
-               attention,
-               post_number,
+               follower_num,
+               attention_num,
+               post_num,
                now_tag,
-               like_number,
-               view_number,
-               avatar_path,
+               like_num,
+               view_num,
+               avatar_uuid,
                ip_pos
         from user
     </select>
@@ -161,14 +161,14 @@
                level,
                exp,
                coin,
-               follower,
-               attention,
-               post_number,
+               follower_num,
+               attention_num,
+               post_num,
                now_tag,
                ip_pos,
-               like_number,
-               view_number,
-               avatar_path
+               like_num,
+               view_num,
+               avatar_uuid
         from user
         where uid = #{uid,jdbcType=BIGINT}
     </select>

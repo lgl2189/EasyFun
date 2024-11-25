@@ -29,26 +29,8 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @GetMapping("/video/cover")
-    public ResponseEntity<StreamingResponseBody> getVideoCoverImage(@RequestParam("image_uuid") String imageUuid){
-        byte[] imageBytes = imageService.getImage(imageUuid);
-        //判断图片是否存在，不存在则返回404
-        if(imageBytes == null){
-            return ResponseEntity.notFound().build();
-        }
-        StreamingResponseBody responseBody = outputStream -> {
-            outputStream.write(imageBytes);
-            outputStream.flush();
-            //Spring框架负责关闭，手动关闭可能提前关闭输出流，导致错误
-        };
-        return ResponseEntity.ok()
-               .contentLength(imageBytes.length)
-               .contentType(MediaType.valueOf("image/avif"))
-                .body(responseBody);
-    }
-
-    @GetMapping("/user/avatar")
-    public ResponseEntity<StreamingResponseBody> getUserAvatarImage(@RequestParam("image_uuid") String imageUuid){
+    @GetMapping("")
+    public ResponseEntity<StreamingResponseBody> getImage(@RequestParam("image_uuid") String imageUuid){
         byte[] imageBytes = imageService.getImage(imageUuid);
         //判断图片是否存在，不存在则返回404
         if(imageBytes == null){
@@ -63,5 +45,15 @@ public class ImageController {
                 .contentLength(imageBytes.length)
                 .contentType(MediaType.valueOf("image/avif"))
                 .body(responseBody);
+    }
+
+    @GetMapping("/video/cover")
+    public ResponseEntity<StreamingResponseBody> getVideoCoverImage(@RequestParam("image_uuid") String imageUuid){
+        return getImage(imageUuid);
+    }
+
+    @GetMapping("/user/avatar")
+    public ResponseEntity<StreamingResponseBody> getUserAvatarImage(@RequestParam("image_uuid") String imageUuid){
+        return getImage(imageUuid);
     }
 }
