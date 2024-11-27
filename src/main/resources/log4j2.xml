@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--OFF 表示不打印log4j2自身的日志 -->
+<configuration status="OFF">
+    <Loggers>
+        <Logger name="com.qdu.mapper" level="debug"/>
+    </Loggers>
+</configuration>

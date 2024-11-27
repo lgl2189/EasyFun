@@ -133,4 +133,20 @@ public class AccountController {
         tokenService.deleteToken(accountToken);
         return JsonDataWrapperUtil.success_200(null);
     }
+
+    @PostMapping("/get/uid")
+    @ResponseBody
+    public JsonDataWrapper getUid(@RequestBody Map<String, String> resMap) {
+        String accountToken = resMap.get("account_token");
+        if(!tokenService.isTokenExpired(accountToken)) {
+            Long uid = tokenService.getUidByToken(accountToken);
+            if (uid == null) {
+                return JsonDataWrapperUtil.fail_402(null);
+            }
+            Map<String, Long> resMap1 = new HashMap<>();
+            resMap1.put("uid", uid);
+            return JsonDataWrapperUtil.success_200(resMap1);
+        }
+        return JsonDataWrapperUtil.fail_402(null);
+    }
 }
