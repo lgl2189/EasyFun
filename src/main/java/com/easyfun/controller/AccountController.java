@@ -82,8 +82,8 @@ public class AccountController {
         }
         //校验手机号是否已注册
         boolean isPhoneUsed = accountService.registerUser(phone);
-        //校验验证码是否正确
-        if (!verificationCode.equals("1234")) {
+        //校验验证码是否正确（将1234作为测试验证码）
+        if (!accountService.isVerificationCodeRight(phone, verificationCode)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         User user = new User();
@@ -115,15 +115,16 @@ public class AccountController {
     @PostMapping("/change/password")
     public @ResponseBody JsonDataWrapper changePassword(@RequestBody Map<String, String> reqMap) {
         String accountToken = reqMap.get("account_token");
-        String password = reqMap.get("password");
+        String newPassword = reqMap.get("password");
+        Long inputUid = Long.valueOf(reqMap.get("uid"));
         Long uid = tokenService.getUidByToken(accountToken);
-        if (uid == null) {
+        // equals()方法当参数为null时，返回false，所以这里不需要单独判断uid是否为null
+        if (!inputUid.equals(uid)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        if (!accountService.changePassword(uid, AccountService.DEFAULT_PASSWORD, password)) {
+        if (!accountService.changePasswordWithoutOldPassword(uid, newPassword)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        ;
         return JsonDataWrapperUtil.success_200(null);
     }
 
@@ -148,5 +149,19 @@ public class AccountController {
             return JsonDataWrapperUtil.success_200(resMap1);
         }
         return JsonDataWrapperUtil.fail_402(null);
+    }
+
+    @PostMapping("/verify/phone")
+    @ResponseBody
+    public JsonDataWrapper verifyPhone(@RequestBody Map<String, String> reqMap) {
+        String phone = reqMap.get("phone");
+        String verifyCode = reqMap.get("verify_code");
+        if(phone.isEmpty() || !verifyCode.equals("123456")){
+            return JsonDataWrapperUtil.fail_402(null);
+        }
+        String verifyToken = tokenService.getVerificationToken(LocalDateTime.now().plusHours(6));
+        Map<String, String> resMap = new HashMap<>();
+        resMap.put("verify_token", verifyToken);
+        return JsonDataWrapperUtil.success_200(resMap);
     }
 }

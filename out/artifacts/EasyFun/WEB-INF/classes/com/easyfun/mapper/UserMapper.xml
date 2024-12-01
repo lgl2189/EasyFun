@@ -75,10 +75,10 @@
             <if test="coin != null">
                 coin = #{coin,jdbcType=INTEGER},
             </if>
-            <if test="follower_num != null">
+            <if test="followerNum != null">
                 follower_num = #{followerNum,jdbcType=INTEGER},
             </if>
-            <if test="attention_num != null">
+            <if test="attentionNum != null">
                 attention_num = #{attentionNum,jdbcType=INTEGER},
             </if>
             <if test="postNum != null">

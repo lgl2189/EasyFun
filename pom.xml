@@ -133,6 +133,37 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <!--     去除TLD警告，并排除不需要的资源文件，加快速度       -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version> <!-- 请确保使用最新版本 -->
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>tld</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jpg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jpeg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>png</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>js</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>css</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                    <packagingExcludes>
+                        WEB-INF/lib/*.jar,
+                        WEB-INF/classes/**/*.class
+                    </packagingExcludes>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp/WEB-INF</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>**/web.xml</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

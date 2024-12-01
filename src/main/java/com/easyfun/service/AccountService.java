@@ -17,7 +17,7 @@ public class AccountService {
 
     private final UserMapper userMapper;
 
-    public static final String DEFAULT_PASSWORD = "";
+    private static final String DEFAULT_VERIFICATION_CODE = "1234";
 
     @Autowired
     public AccountService(UserMapper userMapper) {
@@ -75,12 +75,12 @@ public class AccountService {
 
     public boolean hasPassword(Long uid) {
         String password = userMapper.selectByPrimaryKey(uid).getPassword();
-        return password != null && !password.equals(DEFAULT_PASSWORD);
+        return password != null && !password.isEmpty();
     }
 
     public boolean changePassword(Long uid, String oldPassword, String newPassword) {
         String realOldPassword = userMapper.selectByPrimaryKey(uid).getPassword();
-        if (!realOldPassword.equals(DEFAULT_PASSWORD) && !realOldPassword.equals(oldPassword)) {
+        if (!realOldPassword.equals(oldPassword)) {
             return false;
         }
         User user = new User();
@@ -88,5 +88,17 @@ public class AccountService {
         user.setPassword(newPassword);
         userMapper.updateByPrimaryKey(user);
         return true;
+    }
+
+    public boolean changePasswordWithoutOldPassword(Long uid, String newPassword) {
+        User user = new User();
+        user.setUid(uid);
+        user.setPassword(newPassword);
+        userMapper.updateByPrimaryKey(user);
+        return true;
+    }
+
+    public boolean isVerificationCodeRight(String phone, String verificationCode) {
+        return verificationCode.equals(DEFAULT_VERIFICATION_CODE);
     }
 }
