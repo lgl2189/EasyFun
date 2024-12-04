@@ -14,4 +14,6 @@ public interface CommentAreaMapper {
     List<CommentArea> selectAll();
 
     int updateByPrimaryKey(CommentArea row);
+
+    Long getMaxCaid();
 }

@@ -12,12 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,5 +130,29 @@ public class VideoController {
         Map<String, List<Video>> resMap = new HashMap<>();
         resMap.put("video_list", recommendVideoList);
         return JsonDataWrapperUtil.success_200(resMap);
+    }
+
+    @PostMapping("/upload")
+    public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles) {
+        if (videoFiles == null || videoFiles.length == 0) {
+            return JsonDataWrapperUtil.fail_402(null, "请上传视频文件");
+        }
+        int count = 0;
+        for (MultipartFile videoFile : videoFiles) {
+            if (videoFile.isEmpty()) {
+                ++count;
+                continue;
+            }
+            try {
+                String fileName = videoFile.getOriginalFilename();
+                byte[] bytes = videoFile.getBytes();
+                videoService.addVideo(fileName, bytes);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                return JsonDataWrapperUtil.fail_403(null, "上传视频文件失败");
+            }
+        }
+        return JsonDataWrapperUtil.success_200(null, "上传失败个数：" + count);
     }
 }

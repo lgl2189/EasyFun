@@ -45,7 +45,7 @@ public class Video {
 
     private Long commentAid;
 
-    private JsonObject danmakuList;
+    private JsonArray danmakuList;
 
     public Long getVid() {
         return vid;
@@ -199,11 +199,11 @@ public class Video {
         this.commentAid = commentAid;
     }
 
-    public JsonObject getDanmakuList() {
+    public JsonArray getDanmakuList() {
         return danmakuList;
     }
 
-    public void setDanmakuList(JsonObject danmakuList) {
+    public void setDanmakuList(JsonArray danmakuList) {
         this.danmakuList = danmakuList;
     }
 

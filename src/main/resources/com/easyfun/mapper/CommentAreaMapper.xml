@@ -27,4 +27,7 @@
     select caid, type
     from comment_area
   </select>
+  <select id="getMaxCaid" resultType="java.lang.Long">
+    select max(caid) from comment_area
+  </select>
 </mapper>

@@ -21,7 +21,7 @@
         <result column="cover_uuid" jdbcType="VARCHAR" property="coverUuid"/>
         <result column="tag_list" jdbcType="JAVA_OBJECT" property="tagList"/>
         <result column="comment_aid" jdbcType="BIGINT" property="commentAid"/>
-        <result column="danmaku_list" jdbcType="LONGVARCHAR" property="danmakuList"/>
+        <result column="danmaku_list" jdbcType="JAVA_OBJECT" property="danmakuList"/>
     </resultMap>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
@@ -42,7 +42,7 @@
                 #{viewNum,jdbcType=INTEGER}, #{danmakuNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER},
                 #{publishDatetime,jdbcType=TIMESTAMP}, #{isOriginal,jdbcType=BIT}, #{description,jdbcType=VARCHAR},
                 #{videoDuration,jdbcType=TIME}, #{coverUuid,jdbcType=VARCHAR}, #{tagList,jdbcType=LONGVARCHAR},
-                #{commentAid,jdbcType=BIGINT}, #{danmakuList,jdbcType=LONGVARCHAR})
+                #{commentAid,jdbcType=BIGINT}, #{danmakuList,jdbcType=JAVA_OBJECT})
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.easyfun.pojo.Video">
         update video
@@ -64,7 +64,7 @@
             cover_uuid       = #{coverUuid,jdbcType=VARCHAR},
             tag_list         = #{tagList,jdbcType=LONGVARCHAR},
             comment_aid     = #{commentAid,jdbcType=BIGINT},
-            danmaku_list     = #{danmakuList,jdbcType=LONGVARCHAR}
+            danmaku_list     = #{danmakuList,jdbcType=JAVA_OBJECT}
         where vid = #{vid,jdbcType=BIGINT}
     </update>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -138,5 +138,8 @@
                comment_aid,
                danmaku_list
         from video
+    </select>
+    <select id="getMaxVid" resultType="java.lang.Long">
+        select max(vid) from video
     </select>
 </mapper>

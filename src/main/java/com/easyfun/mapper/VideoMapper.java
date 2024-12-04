@@ -20,4 +20,6 @@ public interface VideoMapper {
     List<Video> selectAll();
 
     int updateByPrimaryKey(Video row);
+
+    Long getMaxVid();
 }
