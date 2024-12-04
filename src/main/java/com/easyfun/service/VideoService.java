@@ -29,6 +29,8 @@ public class VideoService {
         FULL
     }
 
+    private static final String VIDEO_PATH_PREFIX = "C:\\Users\\12145\\Desktop\\Easy_Fun\\视频存储\\";
+
     private final VideoMapper videoMapper;
     private final CommentAreaMapper commentAreaMapper;
 
@@ -69,7 +71,7 @@ public class VideoService {
         video.setCommentAid(commentAreaMapper.getMaxCaid() + 1);
         video.setVideoDuration(LocalTime.of(1,1,1));
         video.setCoverUuid("");
-        video.setVideoPath("C:\\Users\\12145\\Desktop\\Easy_Fun\\测试视频\\" + video.getVid() + ".mp4");
+        video.setVideoPath(VIDEO_PATH_PREFIX + video.getVid() + ".mp4");
         video.setLikeNum(0);
         video.setCoinNum(0);
         video.setFavoriteNum(0);
@@ -86,7 +88,7 @@ public class VideoService {
     }
 
     public void saveVideo(Video video, byte[] videoBytes) {
-        String videoUrl = "C:\\Users\\12145\\Desktop\\Easy_Fun\\测试视频\\" + video.getVid() + ".mp4";
+        String videoUrl = VIDEO_PATH_PREFIX + video.getVid() + ".mp4";
         try(FileOutputStream fos = new FileOutputStream(videoUrl)){
             fos.write(videoBytes);
             fos.flush();

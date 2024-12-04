@@ -1,9 +1,13 @@
 package com.easyfun.controller;
 
 import com.easyfun.entity.JsonDataWrapper;
+import com.easyfun.entity.VideoUploadInfo;
 import com.easyfun.pojo.Video;
 import com.easyfun.service.VideoService;
 import com.easyfun.util.JsonDataWrapperUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -35,10 +40,12 @@ import java.util.Map;
 public class VideoController {
 
     private final VideoService videoService;
+    private final Gson gson;
 
-    public VideoController(VideoService videoService) {
+    public VideoController(VideoService videoService, Gson gson) {
         Assert.notNull(videoService, "videoService must not be null");
         this.videoService = videoService;
+        this.gson = gson;
     }
 
     @GetMapping(value = "")
@@ -133,7 +140,10 @@ public class VideoController {
     }
 
     @PostMapping("/upload")
-    public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles) {
+    public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles,
+                                                     @RequestParam("meta_data") String metaDataStr) {
+        Type metaDataType = new TypeToken<List<VideoUploadInfo>>(){}.getType();
+        List<VideoUploadInfo> metaList = gson.fromJson(metaDataStr, metaDataType);
         if (videoFiles == null || videoFiles.length == 0) {
             return JsonDataWrapperUtil.fail_402(null, "请上传视频文件");
         }
