@@ -5,6 +5,14 @@ public class CommentArea {
 
     private Integer type;
 
+    public CommentArea() {
+    }
+
+    public CommentArea(Long caid, Integer type) {
+        this.caid = caid;
+        this.type = type;
+    }
+
     public Long getCaid() {
         return caid;
     }

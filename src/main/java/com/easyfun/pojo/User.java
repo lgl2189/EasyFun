@@ -25,23 +25,23 @@ public class User {
 
     private Boolean vipStatus;
 
-    private Integer level;
+    private Integer level = 0;
 
-    private Integer exp;
+    private Integer exp = 0;
 
-    private Integer coin;
+    private Integer coin = 0;
 
-    private Integer followerNum;
+    private Integer followerNum = 0;
 
-    private Integer attentionNum;
+    private Integer attentionNum = 0;
 
-    private Integer postNum;
+    private Integer postNum = 0;
 
-    private Long nowTag;
+    private Long nowTag = 0L;
 
-    private Integer likeNum;
+    private Integer likeNum = 0;
 
-    private Integer viewNum;
+    private Integer viewNum = 0;
 
     private String avatarUuid;
 

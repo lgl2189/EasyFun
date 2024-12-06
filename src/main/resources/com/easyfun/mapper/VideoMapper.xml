@@ -30,16 +30,12 @@
     </delete>
     <insert id="insert" parameterType="com.easyfun.pojo.Video">
         insert into video (vid, video_path, title,
-                           publisher_id, publisher_name, like_num,
-                           coin_num, favorite_num, share_num,
-                           view_num, danmaku_num, comment_num,
+                           publisher_id, publisher_name,
                            publish_datetime, is_original, description,
                            video_duration, cover_uuid, tag_list,
                            comment_aid, danmaku_list)
         values (#{vid,jdbcType=BIGINT}, #{videoPath,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
-                #{publisherId,jdbcType=BIGINT}, #{publisherName,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER},
-                #{coinNum,jdbcType=INTEGER}, #{favoriteNum,jdbcType=INTEGER}, #{shareNum,jdbcType=INTEGER},
-                #{viewNum,jdbcType=INTEGER}, #{danmakuNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER},
+                #{publisherId,jdbcType=BIGINT}, #{publisherName,jdbcType=VARCHAR},
                 #{publishDatetime,jdbcType=TIMESTAMP}, #{isOriginal,jdbcType=BIT}, #{description,jdbcType=VARCHAR},
                 #{videoDuration,jdbcType=TIME}, #{coverUuid,jdbcType=VARCHAR}, #{tagList,jdbcType=LONGVARCHAR},
                 #{commentAid,jdbcType=BIGINT}, #{danmakuList,jdbcType=JAVA_OBJECT})

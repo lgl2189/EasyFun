@@ -67,6 +67,7 @@ public class AccountController {
         String token = tokenService.insertToken(uid);
         tokenService.deleteVerificationToken(loginToken);
         Map<String, String> resMap = new HashMap<>();
+        resMap.put("uid", String.valueOf(uid));
         resMap.put("account_token", token);
         return JsonDataWrapperUtil.success_200(resMap);
     }
@@ -96,6 +97,7 @@ public class AccountController {
         tokenService.deleteVerificationToken(loginToken);
         boolean hasPassword = accountService.hasPassword(uid);
         Map<String, String> resMap = new HashMap<>();
+        resMap.put("uid", String.valueOf(uid));
         resMap.put("new_user", String.valueOf(!isPhoneUsed));
         resMap.put("has_password", String.valueOf(hasPassword));
         resMap.put("account_token", token);
@@ -109,7 +111,10 @@ public class AccountController {
             return JsonDataWrapperUtil.fail_402(null);
         }
         //token未过期，验证通过
-        return JsonDataWrapperUtil.success_200(null);
+        Long uid = tokenService.getUidByToken(loginToken);
+        Map<String, String> resMap = new HashMap<>();
+        resMap.put("uid", String.valueOf(uid));
+        return JsonDataWrapperUtil.success_200(resMap);
     }
 
     @PostMapping("/change/password")

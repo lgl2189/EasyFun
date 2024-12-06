@@ -2,6 +2,7 @@ package com.easyfun.service;
 
 import com.easyfun.mapper.CommentAreaMapper;
 import com.easyfun.mapper.VideoMapper;
+import com.easyfun.pojo.CommentArea;
 import com.easyfun.pojo.Video;
 import com.google.gson.JsonArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,9 @@ public class VideoService {
         video.setIsOriginal(true);
         video.setDescription("无描述");
         video.setTagList(new JsonArray());
-        video.setCommentAid(commentAreaMapper.getMaxCaid() + 1);
+        Long caid = commentAreaMapper.getMaxCaid() + 1;
+        commentAreaMapper.insert(new CommentArea(caid,1));
+        video.setCommentAid(caid);
         video.setVideoDuration(LocalTime.of(1,1,1));
         video.setCoverUuid("");
         video.setVideoPath(VIDEO_PATH_PREFIX + video.getVid() + ".mp4");
