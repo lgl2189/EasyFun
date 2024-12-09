@@ -21,7 +21,7 @@ import java.util.List;
 @Component
 public class WebMvcConfigurer implements org.springframework.web.servlet.config.annotation.WebMvcConfigurer {
 
-    private GsonHttpMessageConverter gsonHttpMessageConverter;
+    private final GsonHttpMessageConverter gsonHttpMessageConverter;
 
     public WebMvcConfigurer(GsonHttpMessageConverter gsonHttpMessageConverter) {
         Assert.notNull(gsonHttpMessageConverter, "gsonHttpMessageConverter must not be null");
@@ -48,4 +48,5 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
         resourceConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.parseMediaType("video/mp4")));
         converters.add(resourceConverter);
     }
+
 }

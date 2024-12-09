@@ -9,23 +9,27 @@ package com.easyfun.entity;
 
 public class VideoUploadInfo {
 
-    private String fileName;
+    private String name;
     private String uuid;
+    private byte[] videoFile;
+    private byte[] coverFile;
 
     public VideoUploadInfo() {
     }
 
-    public VideoUploadInfo(String fileName, String uuid) {
-        this.fileName = fileName;
+    public VideoUploadInfo(String name, String uuid, byte[] videoFile, byte[] coverFile) {
+        this.name = name;
         this.uuid = uuid;
+        this.videoFile = videoFile;
+        this.coverFile = coverFile;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUuid() {
@@ -34,5 +38,21 @@ public class VideoUploadInfo {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public byte[] getVideoFile() {
+        return videoFile;
+    }
+
+    public void setVideoFile(byte[] videoFile) {
+        this.videoFile = videoFile;
+    }
+
+    public byte[] getCoverFile() {
+        return coverFile;
+    }
+
+    public void setCoverFile(byte[] coverFile) {
+        this.coverFile = coverFile;
     }
 }

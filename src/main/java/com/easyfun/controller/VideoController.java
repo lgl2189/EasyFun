@@ -6,8 +6,8 @@ import com.easyfun.pojo.Video;
 import com.easyfun.service.VideoService;
 import com.easyfun.util.JsonDataWrapperUtil;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +41,10 @@ public class VideoController {
     private final VideoService videoService;
     private final Gson gson;
 
+    @Autowired
     public VideoController(VideoService videoService, Gson gson) {
         Assert.notNull(videoService, "videoService must not be null");
+        Assert.notNull(gson, "gson must not be null");
         this.videoService = videoService;
         this.gson = gson;
     }
@@ -139,13 +140,18 @@ public class VideoController {
         return JsonDataWrapperUtil.success_200(resMap);
     }
 
-    @PostMapping("/upload")
-    public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles,
-                                                     @RequestParam("meta_data") String metaDataStr) {
-        Type metaDataType = new TypeToken<List<VideoUploadInfo>>(){}.getType();
-        List<VideoUploadInfo> metaList = gson.fromJson(metaDataStr, metaDataType);
+        @PostMapping("/upload")
+        public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles,
+                                                         @RequestParam(value = "cover_blobs",required = false) MultipartFile[] videoCovers,
+                                                         @RequestParam("meta_data") String metaDataStr) {
         if (videoFiles == null || videoFiles.length == 0) {
             return JsonDataWrapperUtil.fail_402(null, "请上传视频文件");
+        }
+        Type metaDataType = new TypeToken<List<VideoUploadInfo>>() {}.getType();
+        List<VideoUploadInfo> metaList = gson.fromJson(metaDataStr, metaDataType);
+        Map<String, VideoUploadInfo> metaHashMap = new HashMap<>();
+        for (VideoUploadInfo meta : metaList) {
+            metaHashMap.put(meta.getUuid(), meta);
         }
         int count = 0;
         for (MultipartFile videoFile : videoFiles) {
@@ -153,15 +159,31 @@ public class VideoController {
                 ++count;
                 continue;
             }
+            VideoUploadInfo videoUploadInfo = metaHashMap.get(videoFile.getOriginalFilename());
             try {
-                String fileName = videoFile.getOriginalFilename();
-                byte[] bytes = videoFile.getBytes();
-                videoService.addVideo(fileName, bytes);
+                videoUploadInfo.setVideoFile(videoFile.getBytes());
             }
             catch (IOException e) {
-                e.printStackTrace();
-                return JsonDataWrapperUtil.fail_403(null, "上传视频文件失败");
+                throw new RuntimeException(e);
             }
+        }
+        if(videoCovers != null){
+            for (MultipartFile coverBlob : videoCovers) {
+                VideoUploadInfo videoUploadInfo = metaHashMap.get(coverBlob.getOriginalFilename());
+                try {
+                    videoUploadInfo.setCoverFile(coverBlob.getBytes());
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        for (Map.Entry<String, VideoUploadInfo> entry : metaHashMap.entrySet()) {
+            VideoUploadInfo videoUploadInfo = entry.getValue();
+            String fileName = videoUploadInfo.getName();
+            byte[] videoBytes = videoUploadInfo.getVideoFile();
+            byte[] coverBytes = videoUploadInfo.getCoverFile();
+            videoService.addVideo(fileName, videoBytes, coverBytes);
         }
         return JsonDataWrapperUtil.success_200(null, "上传失败个数：" + count);
     }
