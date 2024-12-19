@@ -10,11 +10,11 @@ public interface VideoSaveMapper {
 
     List<VideoSave> selectAll();
 
-    void updateLike(@Param("vid") long vid, @Param("uid") long uid, @Param("isLike") boolean isLike);
+    int updateLike(@Param("vid") long vid, @Param("uid") long uid, @Param("isLike") boolean isLike);
 
-    void updateCoinNum(@Param("vid") long vid, @Param("uid") long uid, @Param("coinNum") int coinNum);
+    int updateCoinNum(@Param("vid") long vid, @Param("uid") long uid, @Param("coinNum") int coinNum);
 
-    void updateFav(@Param("vid") long vid, @Param("uid") long uid, @Param("isFav") boolean isFav);
+    int updateFav(@Param("vid") long vid, @Param("uid") long uid, @Param("isFav") boolean isFav);
 
-    void updateShare(@Param("vid") long vid, @Param("uid") long uid, @Param("isShare") boolean isShare);
+    int updateShare(@Param("vid") long vid, @Param("uid") long uid, @Param("isShare") boolean isShare);
 }

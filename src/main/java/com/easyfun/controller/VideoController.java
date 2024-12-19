@@ -195,7 +195,8 @@ public class VideoController {
     }
 
     @GetMapping("/user/status")
-    public @ResponseBody JsonDataWrapper changeUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid, @RequestParam("type") String type,
+    public @ResponseBody JsonDataWrapper changeUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid,
+                                                          @RequestParam("type") String type,
                                                           @RequestParam("value") int value) {
         if (value < 0 || value > 3) {
             return JsonDataWrapperUtil.fail_402(null, "value参数错误");
@@ -206,20 +207,29 @@ public class VideoController {
             case "like": {
                 videoService.updateLikeNum(vid, valueBool);
                 videoSave.setIsLike(valueBool);
+                break;
             }
             case "coin": {
                 videoService.updateCoinNum(vid, value);
                 videoSave.setCoinNum(value);
+                break;
             }
             case "fav": {
                 videoService.updateFavoriteNum(vid, valueBool);
                 videoSave.setIsFav(valueBool);
+                break;
             }
             case "share": {
                 videoService.updateShareNum(vid, valueBool);
                 videoSave.setIsShare(valueBool);
+                break;
+            }
+            default:{
+                return JsonDataWrapperUtil.fail_402(null, "type参数错误");
             }
         }
+        videoSave.setVid(vid);
+        videoSave.setUid(uid);
         videoSaveService.updateVideoSave(vid, uid, videoSave);
         return JsonDataWrapperUtil.success_200(null);
     }

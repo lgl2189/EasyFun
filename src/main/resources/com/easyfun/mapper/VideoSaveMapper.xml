@@ -12,7 +12,7 @@
   <insert id="insert" parameterType="com.easyfun.pojo.VideoSave">
     insert into video_save (vid, uid, is_like, coin_num,
       is_fav, is_share)
-    values (#{vid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{isLike,jdbcType=BIT}, #{isCoin,jdbcType=BIT}, 
+    values (#{vid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{isLike,jdbcType=BIT}, #{coinNum,jdbcType=BIT},
       #{isFav,jdbcType=BIT}, #{isShare,jdbcType=BIT})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">

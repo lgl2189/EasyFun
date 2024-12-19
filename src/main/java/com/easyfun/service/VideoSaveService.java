@@ -23,17 +23,21 @@ public class VideoSaveService {
     }
 
     public void updateVideoSave(long vid, long uid, VideoSave videoSave) {
+        int affectRow = 0;
         if (videoSave.getIsLike() != null) {
-            videoSaveMapper.updateLike(vid, uid, videoSave.getIsLike());
+            affectRow = videoSaveMapper.updateLike(vid, uid, videoSave.getIsLike());
         }
         if (videoSave.getCoinNum() != null) {
-            videoSaveMapper.updateCoinNum(vid, uid, videoSave.getCoinNum());
+            affectRow = videoSaveMapper.updateCoinNum(vid, uid, videoSave.getCoinNum());
         }
         if (videoSave.getIsFav() != null) {
-            videoSaveMapper.updateFav(vid, uid, videoSave.getIsFav());
+            affectRow = videoSaveMapper.updateFav(vid, uid, videoSave.getIsFav());
         }
         if (videoSave.getIsShare() != null) {
-            videoSaveMapper.updateShare(vid, uid, videoSave.getIsShare());
+            affectRow = videoSaveMapper.updateShare(vid, uid, videoSave.getIsShare());
+        }
+        if(affectRow == 0){
+            videoSaveMapper.insert(videoSave);
         }
     }
 }
