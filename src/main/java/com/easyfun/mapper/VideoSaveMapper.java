@@ -10,6 +10,8 @@ public interface VideoSaveMapper {
 
     List<VideoSave> selectAll();
 
+    VideoSave select(@Param("vid") long vid, @Param("uid") long uid);
+
     int updateLike(@Param("vid") long vid, @Param("uid") long uid, @Param("isLike") boolean isLike);
 
     int updateCoinNum(@Param("vid") long vid, @Param("uid") long uid, @Param("coinNum") int coinNum);

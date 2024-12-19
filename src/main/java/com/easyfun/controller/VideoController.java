@@ -194,8 +194,8 @@ public class VideoController {
         return JsonDataWrapperUtil.success_200(null, "上传失败个数：" + count);
     }
 
-    @GetMapping("/user/status")
-    public @ResponseBody JsonDataWrapper changeUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid,
+    @GetMapping("/user/status/modify")
+    public @ResponseBody JsonDataWrapper modifyUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid,
                                                           @RequestParam("type") String type,
                                                           @RequestParam("value") int value) {
         if (value < 0 || value > 3) {
@@ -234,8 +234,14 @@ public class VideoController {
         return JsonDataWrapperUtil.success_200(null);
     }
 
-//    @PostMapping("/like")
-//    public @ResponseBody JsonDataWrapper changeIsLike(@RequestParam("vid") Long vid, @RequestParam("is_like") Boolean isLike){
+    @GetMapping("/user/status/get")
+    public @ResponseBody JsonDataWrapper getUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid){
+        VideoSave videoSave = videoSaveService.getVideoSave(vid, uid);
+        return JsonDataWrapperUtil.success_200(videoSave);
+    }
+
+    //    @PostMapping("/like")
+//    public @ResponseBody JsonDataWrapper changeIsLike(){
 //
 //    }
 }

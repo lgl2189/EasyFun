@@ -19,6 +19,11 @@
     select vid, uid, is_like, coin_num, is_fav, is_share
     from video_save
   </select>
+  <select id="select" resultMap="BaseResultMap">
+    select vid, uid, is_like, coin_num, is_fav, is_share
+    from video_save
+    where vid = #{vid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </select>
   <update id="updateLike" parameterType="com.easyfun.pojo.VideoSave">
     update video_save set is_like = #{isLike,jdbcType=BIT}
     where vid = #{vid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}

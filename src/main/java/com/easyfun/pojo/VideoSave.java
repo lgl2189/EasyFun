@@ -5,13 +5,13 @@ public class VideoSave {
 
     private Long uid;
 
-    private Boolean isLike = false;
+    private Boolean isLike;
 
-    private Integer coinNum = 0;
+    private Integer coinNum;
 
-    private Boolean isFav =false;
+    private Boolean isFav;
 
-    private Boolean isShare = false;
+    private Boolean isShare;
 
     public VideoSave() {
     }
