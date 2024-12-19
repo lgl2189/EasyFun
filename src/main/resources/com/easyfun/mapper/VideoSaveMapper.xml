@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfun.mapper.VideoSaveMapper">
+  <resultMap id="BaseResultMap" type="com.easyfun.pojo.VideoSave">
+    <result column="vid" jdbcType="BIGINT" property="vid" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="is_like" jdbcType="BIT" property="isLike" />
+    <result column="coin_num" jdbcType="BIT" property="coinNum" />
+    <result column="is_fav" jdbcType="BIT" property="isFav" />
+    <result column="is_share" jdbcType="BIT" property="isShare" />
+  </resultMap>
+  <insert id="insert" parameterType="com.easyfun.pojo.VideoSave">
+    insert into video_save (vid, uid, is_like, coin_num,
+      is_fav, is_share)
+    values (#{vid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{isLike,jdbcType=BIT}, #{isCoin,jdbcType=BIT}, 
+      #{isFav,jdbcType=BIT}, #{isShare,jdbcType=BIT})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select vid, uid, is_like, coin_num, is_fav, is_share
+    from video_save
+  </select>
+  <update id="updateLike" parameterType="com.easyfun.pojo.VideoSave">
+    update video_save set is_like = #{isLike,jdbcType=BIT}
+    where vid = #{vid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateCoinNum" parameterType="com.easyfun.pojo.VideoSave">
+    update video_save set coin_num = #{coinNum,jdbcType=INTEGER}
+    where vid = #{vid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateFav" parameterType="com.easyfun.pojo.VideoSave">
+    update video_save set is_fav = #{isFav,jdbcType=BIT}
+    where vid = #{vid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateShare" parameterType="com.easyfun.pojo.VideoSave">
+    update video_save set is_share = #{isShare,jdbcType=BIT}
+    where vid = #{vid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </update>
+</mapper>

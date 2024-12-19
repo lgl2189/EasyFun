@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.easyfun.mapper.LikeSaveMapper">
-  <resultMap id="BaseResultMap" type="com.easyfun.pojo.LikeSave">
+<mapper namespace="com.easyfun.mapper.CommentSaveMapper">
+  <resultMap id="BaseResultMap" type="com.easyfun.pojo.CommentSave">
     <result column="rpid" jdbcType="BIGINT" property="rpid" />
     <result column="uid" jdbcType="BIGINT" property="uid" />
     <result column="caid" jdbcType="BIGINT" property="caid" />
     <result column="is_like" jdbcType="BIT" property="isLike" />
     <result column="is_dislike" jdbcType="BIT" property="isDislike" />
   </resultMap>
-  <insert id="insert" parameterType="com.easyfun.pojo.LikeSave">
-    insert into like_save (rpid, uid, caid, 
+  <insert id="insert" parameterType="com.easyfun.pojo.CommentSave">
+    insert into comment_save (rpid, uid, caid, 
       is_like, is_dislike)
     values (#{rpid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{caid,jdbcType=BIGINT}, 
       #{isLike,jdbcType=BIT}, #{isDislike,jdbcType=BIT})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
     select rpid, uid, caid, is_like, is_dislike
-    from like_save
+    from comment_save
   </select>
 </mapper>

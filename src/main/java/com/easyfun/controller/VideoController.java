@@ -3,6 +3,8 @@ package com.easyfun.controller;
 import com.easyfun.entity.JsonDataWrapper;
 import com.easyfun.entity.VideoUploadInfo;
 import com.easyfun.pojo.Video;
+import com.easyfun.pojo.VideoSave;
+import com.easyfun.service.VideoSaveService;
 import com.easyfun.service.VideoService;
 import com.easyfun.util.JsonDataWrapperUtil;
 import com.google.gson.Gson;
@@ -39,13 +41,16 @@ import java.util.Map;
 public class VideoController {
 
     private final VideoService videoService;
+    private final VideoSaveService videoSaveService;
     private final Gson gson;
 
     @Autowired
-    public VideoController(VideoService videoService, Gson gson) {
+    public VideoController(VideoService videoService, VideoSaveService videoSaveService, Gson gson) {
         Assert.notNull(videoService, "videoService must not be null");
+        Assert.notNull(videoSaveService, "videoSaveService must not be null");
         Assert.notNull(gson, "gson must not be null");
         this.videoService = videoService;
+        this.videoSaveService = videoSaveService;
         this.gson = gson;
     }
 
@@ -140,14 +145,15 @@ public class VideoController {
         return JsonDataWrapperUtil.success_200(resMap);
     }
 
-        @PostMapping("/upload")
-        public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles,
-                                                         @RequestParam(value = "cover_blobs",required = false) MultipartFile[] videoCovers,
-                                                         @RequestParam("meta_data") String metaDataStr) {
+    @PostMapping("/upload")
+    public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles,
+                                                     @RequestParam(value = "cover_blobs", required = false) MultipartFile[] videoCovers,
+                                                     @RequestParam("meta_data") String metaDataStr) {
         if (videoFiles == null || videoFiles.length == 0) {
             return JsonDataWrapperUtil.fail_402(null, "请上传视频文件");
         }
-        Type metaDataType = new TypeToken<List<VideoUploadInfo>>() {}.getType();
+        Type metaDataType = new TypeToken<List<VideoUploadInfo>>() {
+        }.getType();
         List<VideoUploadInfo> metaList = gson.fromJson(metaDataStr, metaDataType);
         Map<String, VideoUploadInfo> metaHashMap = new HashMap<>();
         for (VideoUploadInfo meta : metaList) {
@@ -167,7 +173,7 @@ public class VideoController {
                 throw new RuntimeException(e);
             }
         }
-        if(videoCovers != null){
+        if (videoCovers != null) {
             for (MultipartFile coverBlob : videoCovers) {
                 VideoUploadInfo videoUploadInfo = metaHashMap.get(coverBlob.getOriginalFilename());
                 try {
@@ -187,4 +193,39 @@ public class VideoController {
         }
         return JsonDataWrapperUtil.success_200(null, "上传失败个数：" + count);
     }
+
+    @GetMapping("/user/status")
+    public @ResponseBody JsonDataWrapper changeUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid, @RequestParam("type") String type,
+                                                          @RequestParam("value") int value) {
+        if (value < 0 || value > 3) {
+            return JsonDataWrapperUtil.fail_402(null, "value参数错误");
+        }
+        boolean valueBool = value == 1;
+        VideoSave videoSave = new VideoSave();
+        switch (type) {
+            case "like": {
+                videoService.updateLikeNum(vid, valueBool);
+                videoSave.setIsLike(valueBool);
+            }
+            case "coin": {
+                videoService.updateCoinNum(vid, value);
+                videoSave.setCoinNum(value);
+            }
+            case "fav": {
+                videoService.updateFavoriteNum(vid, valueBool);
+                videoSave.setIsFav(valueBool);
+            }
+            case "share": {
+                videoService.updateShareNum(vid, valueBool);
+                videoSave.setIsShare(valueBool);
+            }
+        }
+        videoSaveService.updateVideoSave(vid, uid, videoSave);
+        return JsonDataWrapperUtil.success_200(null);
+    }
+
+//    @PostMapping("/like")
+//    public @ResponseBody JsonDataWrapper changeIsLike(@RequestParam("vid") Long vid, @RequestParam("is_like") Boolean isLike){
+//
+//    }
 }

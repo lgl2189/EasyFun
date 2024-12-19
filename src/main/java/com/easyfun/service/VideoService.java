@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -111,4 +109,36 @@ public class VideoService {
         return videoUuid;
     }
 
+    public void updateLikeNum(Long vid, boolean isLike) {
+        if(isLike){
+            videoMapper.adjustLikeNum(vid, 1);
+        }
+        else{
+            videoMapper.adjustLikeNum(vid, -1);
+        }
+    }
+
+    public void updateCoinNum(Long vid, int coinNum) {
+        if(coinNum >= 1 && coinNum <= 2){
+            videoMapper.adjustCoinNum(vid, coinNum);
+        }
+    }
+
+    public void updateFavoriteNum(Long vid, boolean isFavorite) {
+        if(isFavorite){
+            videoMapper.adjustFavoriteNum(vid, 1);
+        }
+        else{
+            videoMapper.adjustFavoriteNum(vid, -1);
+        }
+    }
+
+    public void updateShareNum(Long vid, boolean isShare) {
+        if(isShare){
+            videoMapper.adjustShareNum(vid, 1);
+        }
+        else{
+            videoMapper.adjustShareNum(vid, -1);
+        }
+    }
 }

@@ -138,4 +138,16 @@
     <select id="getMaxVid" resultType="java.lang.Long">
         select max(vid) from video
     </select>
+    <update id="adjustLikeNum">
+        update video set like_num = like_num + #{likeNum,jdbcType=INTEGER} where vid = #{vid,jdbcType=BIGINT}
+    </update>
+    <update id="adjustCoinNum">
+        update video set coin_num = coin_num + #{coinNum,jdbcType=INTEGER} where vid = #{vid,jdbcType=BIGINT}
+    </update>
+    <update id="adjustFavoriteNum">
+        update video set favorite_num = favorite_num + #{favoriteNum,jdbcType=INTEGER} where vid = #{vid,jdbcType=BIGINT}
+    </update>
+    <update id="adjustShareNum">
+        update video set share_num = share_num + #{shareNum,jdbcType=INTEGER} where vid = #{vid,jdbcType=BIGINT}
+    </update>
 </mapper>

@@ -1,6 +1,6 @@
 package com.easyfun.pojo;
 
-public class LikeSave {
+public class CommentSave {
     private Long rpid;
 
     private Long uid;

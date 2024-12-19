@@ -2,6 +2,7 @@ package com.easyfun.mapper;
 
 import com.easyfun.pojo.Video;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,13 @@ public interface VideoMapper {
     int updateByPrimaryKey(Video row);
 
     Long getMaxVid();
+
+    void adjustLikeNum(@Param("vid") Long vid, @Param("likeNum") int likeNum);
+
+    void adjustCoinNum(@Param("vid") Long vid, @Param("coinNum") int CoinNum);
+
+    void adjustFavoriteNum(@Param("vid") Long vid, @Param("favoriteNum") int favoriteNum);
+
+    void adjustShareNum(@Param("vid") Long vid, @Param("shareNum") int shareNum);
+
 }
