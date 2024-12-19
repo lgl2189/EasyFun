@@ -9,10 +9,7 @@ import com.easyfun.util.JsonDataWrapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -109,5 +106,16 @@ public class CommentController {
     @ResponseBody
     public JsonDataWrapper deleteComment(@RequestBody Map<String, String> reqMap) {
         return JsonDataWrapperUtil.success_200(null);
+    }
+
+    @GetMapping("/like")
+    @ResponseBody
+    public JsonDataWrapper likeComment(@RequestBody Map<String, String> reqMap) {
+        long rpid = Long.parseLong(reqMap.get("rpid"));
+        long uid = Long.parseLong(reqMap.get("uid"));
+        long caid = Long.parseLong(reqMap.get("caid"));
+        String type = reqMap.get("type");
+        boolean value = Boolean.parseBoolean(reqMap.get("value"));
+        return null;
     }
 }
