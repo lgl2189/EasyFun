@@ -83,4 +83,8 @@
     select * from reply where oid = #{oid,jdbcType=BIGINT} and root = #{root,jdbcType=BIGINT} and parent != 0
     limit #{num,jdbcType=INTEGER}
   </select>
+  <update id="updateReplyNum">
+    update reply set reply_num = reply_num + 1
+    where oid = #{oid,jdbcType=BIGINT} and ( rpid = #{root,jdbcType=BIGINT} or rpid = #{parent,jdbcType=BIGINT} )
+  </update>
 </mapper>

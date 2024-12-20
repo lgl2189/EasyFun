@@ -27,4 +27,6 @@ public interface ReplyMapper {
     List<Reply> selectAll();
 
     int updateByPrimaryKey(Reply row);
+
+    void updateReplyNum(@Param("oid") Long oid,@Param("root") Long root,@Param("parent") Long parent);
 }
