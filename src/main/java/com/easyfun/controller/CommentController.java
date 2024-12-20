@@ -65,7 +65,8 @@ public class CommentController {
         try{
             long caid = videoService.getVideoByVid(vid).getCommentAid();
             List<ReplyInfo> replyList = commentService.getReplyListByCaid(caid);
-            Map<String,List<ReplyInfo>> resMap = new HashMap<>();
+            Map<String,Object> resMap = new HashMap<>();
+            resMap.put("caid",caid);
             resMap.put("commentList",replyList);
             return JsonDataWrapperUtil.success_200(resMap);
         }

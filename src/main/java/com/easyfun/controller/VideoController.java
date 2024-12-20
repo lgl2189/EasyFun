@@ -237,7 +237,18 @@ public class VideoController {
     @GetMapping("/user/status/get")
     public @ResponseBody JsonDataWrapper getUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid){
         VideoSave videoSave = videoSaveService.getVideoSave(vid, uid);
-        return JsonDataWrapperUtil.success_200(videoSave);
+        Map<String,Object> resMap = new HashMap<>();
+        if(videoSave != null){
+            resMap.put("is_like", videoSave.getIsLike());
+            resMap.put("coin_num", videoSave.getCoinNum());
+            resMap.put("is_fav", videoSave.getIsFav());
+            resMap.put("is_share", videoSave.getIsShare());
+            resMap.put("is_save",true);
+        }
+        else{
+            resMap.put("is_save", false);
+        }
+        return JsonDataWrapperUtil.success_200(resMap);
     }
 
     //    @PostMapping("/like")
