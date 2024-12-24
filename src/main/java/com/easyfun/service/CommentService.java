@@ -134,7 +134,7 @@ public class CommentService {
      */
     public boolean updateReplyLike(CommentSave commentSave) {
         CommentSave existComment = commentSaveMapper.selectLikeAndDislike(commentSave.getRpid(), commentSave.getUid());
-        if (existComment == null) {
+        if (existComment != null && existComment.getIsLike() == commentSave.getIsLike()) {
             return false;
         }
         replyMapper.updateReplyLike(commentSave.getRpid(), commentSave.getIsLike() ? 1 : -1);
@@ -153,7 +153,7 @@ public class CommentService {
      */
     public boolean updateReplyDislike(CommentSave commentSave) {
         CommentSave existComment = commentSaveMapper.selectLikeAndDislike(commentSave.getRpid(), commentSave.getUid());
-        if (existComment == null) {
+        if (existComment != null && existComment.getIsDislike() == commentSave.getIsDislike()) {
             return false;
         }
         replyMapper.updateReplyDislike(commentSave.getRpid(), commentSave.getIsDislike() ? 1 : -1);
@@ -166,13 +166,14 @@ public class CommentService {
 
     /**
      * 获取评论点赞和踩状态
+     *
      * @param rpid
      * @param uid
      * @return 如果没有记录，返回isLike和isDislike都为false的CommentSave对象
      */
     public CommentSave getCommentSave(long rpid, long uid) {
         CommentSave commentSave = commentSaveMapper.selectLikeAndDislike(rpid, uid);
-        if(commentSave == null){
+        if (commentSave == null) {
             commentSave = new CommentSave();
             commentSave.setRpid(rpid);
             commentSave.setUid(uid);

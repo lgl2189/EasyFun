@@ -110,6 +110,11 @@ public class CommentController {
         return JsonDataWrapperUtil.success_200(null);
     }
 
+    /**
+     * 修改评论的点赞或点踩状态
+     * @param reqMap
+     * @return
+     */
     @PostMapping("/like")
     @ResponseBody
     public JsonDataWrapper likeComment(@RequestBody Map<String, String> reqMap) {
