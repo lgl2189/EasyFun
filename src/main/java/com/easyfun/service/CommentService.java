@@ -134,7 +134,7 @@ public class CommentService {
      */
     public boolean updateReplyLike(CommentSave commentSave) {
         CommentSave existComment = commentSaveMapper.selectLikeAndDislike(commentSave.getRpid(), commentSave.getUid());
-        if (existComment.getIsLike()) {
+        if (existComment == null) {
             return false;
         }
         replyMapper.updateReplyLike(commentSave.getRpid(), commentSave.getIsLike() ? 1 : -1);
@@ -153,7 +153,7 @@ public class CommentService {
      */
     public boolean updateReplyDislike(CommentSave commentSave) {
         CommentSave existComment = commentSaveMapper.selectLikeAndDislike(commentSave.getRpid(), commentSave.getUid());
-        if (existComment.getIsDislike()) {
+        if (existComment == null) {
             return false;
         }
         replyMapper.updateReplyDislike(commentSave.getRpid(), commentSave.getIsDislike() ? 1 : -1);
