@@ -29,4 +29,8 @@ public interface ReplyMapper {
     int updateByPrimaryKey(Reply row);
 
     void updateReplyNum(@Param("oid") Long oid,@Param("root") Long root,@Param("parent") Long parent);
+
+    void updateReplyLike(@Param("rpid") Long rpid,@Param("num") int num);
+
+    void updateReplyDislike(@Param("rpid") Long rpid,@Param("num") int num);
 }

@@ -11,6 +11,17 @@ public class CommentSave {
 
     private Boolean isDislike;
 
+    public CommentSave() {
+    }
+
+    public CommentSave(Long rpid, Long uid, Long caid, Boolean isLike, Boolean isDislike) {
+        this.rpid = rpid;
+        this.uid = uid;
+        this.caid = caid;
+        this.isLike = isLike;
+        this.isDislike = isDislike;
+    }
+
     public Long getRpid() {
         return rpid;
     }

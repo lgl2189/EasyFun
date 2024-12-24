@@ -243,10 +243,10 @@ public class VideoController {
             resMap.put("coin_num", videoSave.getCoinNum());
             resMap.put("is_fav", videoSave.getIsFav());
             resMap.put("is_share", videoSave.getIsShare());
-            resMap.put("is_save",true);
+            resMap.put("is_save","true");
         }
         else{
-            resMap.put("is_save", false);
+            resMap.put("is_save", "false");
         }
         return JsonDataWrapperUtil.success_200(resMap);
     }

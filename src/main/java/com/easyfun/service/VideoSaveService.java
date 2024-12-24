@@ -53,6 +53,16 @@ public class VideoSaveService {
     }
 
     public VideoSave getVideoSave(long vid,long uid) {
-        return videoSaveMapper.select(vid,uid);
+        VideoSave videoSave = videoSaveMapper.select(vid,uid);
+        if(videoSave == null){
+            videoSave = new VideoSave();
+            videoSave.setVid(vid);
+            videoSave.setUid(uid);
+            videoSave.setIsLike(false);
+            videoSave.setIsFav(false);
+            videoSave.setIsShare(false);
+            videoSave.setCoinNum(0);
+        }
+        return videoSave;
     }
 }

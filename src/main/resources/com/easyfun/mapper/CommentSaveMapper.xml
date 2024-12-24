@@ -18,4 +18,19 @@
     select rpid, uid, caid, is_like, is_dislike
     from comment_save
   </select>
+
+  <update id="updateLike">
+    update comment_save set is_like = #{isLike,jdbcType=BIT}
+    where rpid = #{rpid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateDislike">
+    update comment_save set is_dislike = #{isDislike,jdbcType=BIT}
+    where rpid = #{rpid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectLikeAndDislike" resultMap="BaseResultMap">
+    select is_like,is_dislike from comment_save
+    where rpid = #{rpid,jdbcType=BIGINT} and uid = #{uid,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -83,8 +83,19 @@
     select * from reply where oid = #{oid,jdbcType=BIGINT} and root = #{root,jdbcType=BIGINT} and parent != 0
     limit #{num,jdbcType=INTEGER}
   </select>
+
   <update id="updateReplyNum">
     update reply set reply_num = reply_num + 1
     where oid = #{oid,jdbcType=BIGINT} and ( rpid = #{root,jdbcType=BIGINT} or rpid = #{parent,jdbcType=BIGINT} )
+  </update>
+
+  <update id="updateReplyLike">
+    update reply set like_num = like_num + #{num,jdbcType=INTEGER}
+    where rpid = #{rpid,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateReplyDislike">
+    update reply set dislike_num = dislike_num + #{num,jdbcType=INTEGER}
+    where rpid = #{rpid,jdbcType=BIGINT}
   </update>
 </mapper>
