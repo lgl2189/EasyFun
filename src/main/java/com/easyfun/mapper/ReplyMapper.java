@@ -14,7 +14,7 @@ public interface ReplyMapper {
 
     List<Reply> selectAllFirstReply(Long oid);
 
-    List<Reply> selectPartFirstReply(@Param("oid") Long oid,@Param("num") int num);
+    List<Reply> selectPartFirstReply(@Param("oid") Long oid);
 
     List<Reply> selectPartSecondaryReply(@Param("oid") Long oid,@Param("num") int num);
 

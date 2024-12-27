@@ -1,11 +1,14 @@
 package com.easyfun.service;
 
+import com.easyfun.entity.PageObjectWrapper;
 import com.easyfun.entity.ReplyInfo;
 import com.easyfun.mapper.*;
 import com.easyfun.pojo.CommentArea;
 import com.easyfun.pojo.CommentSave;
 import com.easyfun.pojo.Reply;
 import com.easyfun.pojo.User;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -93,9 +96,12 @@ public class CommentService {
         return null;
     }
 
-    public List<ReplyInfo> getReplyListByCaid(long caid) {
+    public PageObjectWrapper<List<ReplyInfo>> getReplyListByCaid(long caid, int commentPageNum, int commentPageSize) {
         List<ReplyInfo> resList = new ArrayList<>();
-        List<Reply> firstReplyList = replyMapper.selectPartFirstReply(caid, 10);
+        PageHelper.startPage(commentPageNum, commentPageSize);
+        List<Reply> firstReplyList = replyMapper.selectPartFirstReply(caid);
+        PageInfo<Reply> pageInfo = new PageInfo<>(firstReplyList);
+        PageHelper.clearPage();
         for (Reply firstReply : firstReplyList) {
             long firstRpid = firstReply.getRpid();
             long firstMid = firstReply.getMid();
@@ -111,7 +117,7 @@ public class CommentService {
             ReplyInfo replyInfo = new ReplyInfo(firstReply, firstUser, secondaryReplyInfoList);
             resList.add(replyInfo);
         }
-        return resList;
+        return new PageObjectWrapper<>(resList,pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getPages());
     }
 
     public List<ReplyInfo> getSecondaryReply(long oid, long root) {

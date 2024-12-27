@@ -58,7 +58,6 @@
   </select>
   <select id="selectPartFirstReply" parameterType="map" resultMap="BaseResultMap">
     select * from reply where oid = #{oid,jdbcType=BIGINT} and root = 0
-    limit #{num,jdbcType=INTEGER}
   </select>
 
   <select id="selectPartSecondaryReply" parameterType="map" resultMap="BaseResultMap">

@@ -7,11 +7,14 @@ import com.easyfun.typehandler.gson.LocalTimeDeserializer;
 import com.easyfun.typehandler.gson.LocalTimeSerializer;
 import com.easyfun.typehandler.mybatis.StringToJsonArray;
 import com.easyfun.typehandler.mybatis.StringToJsonObject;
+import com.github.pagehelper.PageInterceptor;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.apache.commons.text.RandomStringGenerator;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +28,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Properties;
 
 /**
  * @author ：李冠良
@@ -65,11 +69,21 @@ public class SpringConfig {
     }
 
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource){
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setTypeHandlers(new StringToJsonObject(gson()),new StringToJsonArray(gson()));
-        return sqlSessionFactoryBean;
+
+        // 注册 PageHelper 插件
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        Properties properties = new Properties();
+        // 设置分页插件参数，例如数据库类型等
+        properties.setProperty("helperDialect", "mysql");
+        properties.setProperty("reasonable", "true"); // 合理化分页参数
+        pageInterceptor.setProperties(properties);
+        sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageInterceptor});
+
+        return sqlSessionFactoryBean.getObject();
     }
 
     @Bean

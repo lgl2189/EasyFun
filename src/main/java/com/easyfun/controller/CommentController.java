@@ -1,12 +1,14 @@
 package com.easyfun.controller;
 
 import com.easyfun.entity.JsonDataWrapper;
+import com.easyfun.entity.PageObjectWrapper;
 import com.easyfun.entity.ReplyInfo;
 import com.easyfun.pojo.CommentSave;
 import com.easyfun.pojo.Reply;
 import com.easyfun.service.CommentService;
 import com.easyfun.service.VideoService;
 import com.easyfun.util.JsonDataWrapperUtil;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -62,13 +64,17 @@ public class CommentController {
 
     @RequestMapping("/get")
     @ResponseBody
-    public JsonDataWrapper getCommentArea(@RequestParam("vid") long vid) {
+    public JsonDataWrapper getCommentArea(@RequestParam("vid") long vid,@RequestParam("page") int page,
+                                          @RequestParam("pageSize") int pageSize) {
         try {
             long caid = videoService.getVideoByVid(vid).getCommentAid();
-            List<ReplyInfo> replyList = commentService.getReplyListByCaid(caid);
+            PageObjectWrapper<List<ReplyInfo>> pageObjectWrapper = commentService.getReplyListByCaid(caid,page,pageSize);
+            List<ReplyInfo> replyList = pageObjectWrapper.getObject();
             Map<String, Object> resMap = new HashMap<>();
             resMap.put("caid", caid);
             resMap.put("commentList", replyList);
+            resMap.put("page", pageObjectWrapper.getPageNum());
+            resMap.put("total", pageObjectWrapper.getTotal());
             return JsonDataWrapperUtil.success_200(resMap);
         }
         catch (Exception e) {
