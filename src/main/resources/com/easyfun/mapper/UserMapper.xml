@@ -172,4 +172,9 @@
         from user
         where uid = #{uid,jdbcType=BIGINT}
     </select>
+
+    <update id="modifyUserCoin">
+        update user set coin = coin + #{num,jdbcType=INTEGER}
+        where uid = #{uid,jdbcType=BIGINT}
+    </update>
 </mapper>

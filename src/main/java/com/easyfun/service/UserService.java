@@ -13,7 +13,7 @@ import org.springframework.util.Assert;
  */
 @Service
 public class UserService {
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Autowired
     public UserService(UserMapper userMapper) {
@@ -27,5 +27,19 @@ public class UserService {
 
     public User getUserInfoPrivate(long uid) {
         return userMapper.selectByPrimaryKey(uid);
+    }
+
+    public boolean increaseCoin(long uid, int coin) {
+        userMapper.modifyUserCoin(uid, coin);
+        return true;
+    }
+
+    public boolean decreaseCoin(long uid, int coinNum) {
+        int nowCoin = userMapper.selectByPrimaryKey(uid).getCoin();
+        if(nowCoin < coinNum) {
+            return false;
+        }
+        userMapper.modifyUserCoin(uid, -coinNum);
+        return true;
     }
 }

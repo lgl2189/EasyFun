@@ -1,4 +1,7 @@
 import com.easyfun.enumeration.ImageFormatEnum;
+import com.easyfun.util.PasswordHasher;
+
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author ：李冠良
@@ -9,11 +12,8 @@ import com.easyfun.enumeration.ImageFormatEnum;
 
 public class Test {
 
-    public static void main(String[] args) {
-        ImageFormatEnum[] values = ImageFormatEnum.values();
-        for (ImageFormatEnum value : values){
-            System.out.println(value.getFormatStr());
-        }
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+        System.out.println(PasswordHasher.hashPassword("1111"));
     }
 
 }

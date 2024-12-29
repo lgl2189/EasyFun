@@ -2,6 +2,7 @@ package com.easyfun.mapper;
 
 import com.easyfun.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface UserMapper {
     String isPhoneExist(String phone);
 
     User selectUserInfoPublic(Long uid);
+
+    int modifyUserCoin(@Param("uid") Long uid, @Param("num") int num);
 }

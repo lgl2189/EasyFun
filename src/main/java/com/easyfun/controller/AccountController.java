@@ -6,11 +6,13 @@ import com.easyfun.pojo.User;
 import com.easyfun.service.AccountService;
 import com.easyfun.service.TokenService;
 import com.easyfun.util.JsonDataWrapperUtil;
+import com.easyfun.util.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,9 +47,11 @@ public class AccountController {
     }
 
     @PostMapping("/login/pass")
-    public @ResponseBody JsonDataWrapper loginByPass(@RequestBody Map<String, String> reqMap) {
+    public @ResponseBody JsonDataWrapper loginByPass(@RequestBody Map<String, String> reqMap)
+            throws NoSuchAlgorithmException {
         String phone = reqMap.get("phone");
         String password = reqMap.get("password");
+        String passwordHash = PasswordHasher.hashPassword(password);
         String loginToken = reqMap.get("login_token");
         // TODO: 校验login_token是否存在于数据库
         if (!tokenService.isVerificationTokenExist(loginToken)) {
@@ -61,7 +65,7 @@ public class AccountController {
         if (uid == null) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        if (!accountService.isPasswordRight(uid, password)) {
+        if (!accountService.isPasswordRight(uid, passwordHash)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         String token = tokenService.insertToken(uid);
@@ -118,16 +122,18 @@ public class AccountController {
     }
 
     @PostMapping("/change/password")
-    public @ResponseBody JsonDataWrapper changePassword(@RequestBody Map<String, String> reqMap) {
+    public @ResponseBody JsonDataWrapper changePassword(@RequestBody Map<String, String> reqMap)
+            throws NoSuchAlgorithmException {
         String accountToken = reqMap.get("account_token");
         String newPassword = reqMap.get("password");
+        String newPasswordHash = PasswordHasher.hashPassword(newPassword);
         Long inputUid = Long.valueOf(reqMap.get("uid"));
         Long uid = tokenService.getUidByToken(accountToken);
         // equals()方法当参数为null时，返回false，所以这里不需要单独判断uid是否为null
         if (!inputUid.equals(uid)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
-        if (!accountService.changePasswordWithoutOldPassword(uid, newPassword)) {
+        if (!accountService.changePasswordWithoutOldPassword(uid, newPasswordHash)) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         return JsonDataWrapperUtil.success_200(null);
@@ -144,7 +150,7 @@ public class AccountController {
     @ResponseBody
     public JsonDataWrapper getUid(@RequestBody Map<String, String> resMap) {
         String accountToken = resMap.get("account_token");
-        if(!tokenService.isTokenExpired(accountToken)) {
+        if (!tokenService.isTokenExpired(accountToken)) {
             Long uid = tokenService.getUidByToken(accountToken);
             if (uid == null) {
                 return JsonDataWrapperUtil.fail_402(null);
@@ -161,7 +167,7 @@ public class AccountController {
     public JsonDataWrapper verifyPhone(@RequestBody Map<String, String> reqMap) {
         String phone = reqMap.get("phone");
         String verifyCode = reqMap.get("verify_code");
-        if(phone.isEmpty() || !verifyCode.equals("123456")){
+        if (phone.isEmpty() || !verifyCode.equals("123456")) {
             return JsonDataWrapperUtil.fail_402(null);
         }
         String verifyToken = tokenService.getVerificationToken(LocalDateTime.now().plusHours(6));

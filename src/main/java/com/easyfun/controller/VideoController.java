@@ -4,6 +4,7 @@ import com.easyfun.entity.JsonDataWrapper;
 import com.easyfun.entity.VideoUploadInfo;
 import com.easyfun.pojo.Video;
 import com.easyfun.pojo.VideoSave;
+import com.easyfun.service.UserService;
 import com.easyfun.service.VideoSaveService;
 import com.easyfun.service.VideoService;
 import com.easyfun.util.JsonDataWrapperUtil;
@@ -40,15 +41,18 @@ import java.util.Map;
 @RequestMapping("/video")
 public class VideoController {
 
+    private final UserService userService;
     private final VideoService videoService;
     private final VideoSaveService videoSaveService;
     private final Gson gson;
 
     @Autowired
-    public VideoController(VideoService videoService, VideoSaveService videoSaveService, Gson gson) {
+    public VideoController(UserService userService, VideoService videoService, VideoSaveService videoSaveService, Gson gson) {
+        Assert.notNull(userService, "userService must not be null");
         Assert.notNull(videoService, "videoService must not be null");
         Assert.notNull(videoSaveService, "videoSaveService must not be null");
         Assert.notNull(gson, "gson must not be null");
+        this.userService = userService;
         this.videoService = videoService;
         this.videoSaveService = videoSaveService;
         this.gson = gson;
@@ -210,6 +214,11 @@ public class VideoController {
                 break;
             }
             case "coin": {
+                //检查用户是否有足够的硬币
+                if (value > userService.getUserInfoPublic(uid).getCoin()) {
+                    return JsonDataWrapperUtil.fail_402(null, "硬币不足");
+                }
+                userService.decreaseCoin(uid, value);
                 videoService.updateCoinNum(vid, value);
                 videoSave.setCoinNum(value);
                 break;
@@ -224,7 +233,7 @@ public class VideoController {
                 videoSave.setIsShare(valueBool);
                 break;
             }
-            default:{
+            default: {
                 return JsonDataWrapperUtil.fail_402(null, "type参数错误");
             }
         }
@@ -235,17 +244,17 @@ public class VideoController {
     }
 
     @GetMapping("/user/status/get")
-    public @ResponseBody JsonDataWrapper getUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid){
+    public @ResponseBody JsonDataWrapper getUserStatus(@RequestParam("vid") Long vid, @RequestParam("uid") Long uid) {
         VideoSave videoSave = videoSaveService.getVideoSave(vid, uid);
-        Map<String,Object> resMap = new HashMap<>();
-        if(videoSave != null){
+        Map<String, Object> resMap = new HashMap<>();
+        if (videoSave != null) {
             resMap.put("is_like", videoSave.getIsLike());
             resMap.put("coin_num", videoSave.getCoinNum());
             resMap.put("is_fav", videoSave.getIsFav());
             resMap.put("is_share", videoSave.getIsShare());
-            resMap.put("is_save","true");
+            resMap.put("is_save", "true");
         }
-        else{
+        else {
             resMap.put("is_save", "false");
         }
         return JsonDataWrapperUtil.success_200(resMap);
