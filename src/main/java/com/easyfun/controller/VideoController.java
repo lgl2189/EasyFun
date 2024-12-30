@@ -134,8 +134,11 @@ public class VideoController {
     }
 
     @GetMapping("/info")
-    public @ResponseBody JsonDataWrapper getVideo(Long vid) {
+    public @ResponseBody JsonDataWrapper getVideoInfo(Long vid) {
         Video video = videoService.getVideoByVid(vid);
+        if (video == null) {
+            return JsonDataWrapperUtil.fail_404(null, "视频不存在");
+        }
         Map<String, Video> resMap = new HashMap<>();
         resMap.put("video_info", video);
         return JsonDataWrapperUtil.success_200(resMap);

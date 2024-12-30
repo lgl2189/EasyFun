@@ -76,6 +76,19 @@ public class JsonDataWrapperUtil {
         return fail_403(data, "系统错误");
     }
 
+    public static JsonDataWrapper fail_404(Object data, String message) {
+        return create(data, "404", message);
+    }
+
+    /**
+     * 资源不存在
+     * @param data
+     * @return
+     */
+    public static JsonDataWrapper fail_404(Object data) {
+        return fail_404(data, "资源不存在");
+    }
+
     public static JsonDataWrapper create(Object data, String status, String message) {
         return new JsonDataWrapper(data, status, message);
     }

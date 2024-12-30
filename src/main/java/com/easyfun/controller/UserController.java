@@ -8,9 +8,7 @@ import com.easyfun.util.JsonDataWrapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +41,7 @@ public class UserController {
         if(user == null){
             return JsonDataWrapperUtil.fail_402(null);
         }
-        Map<String,User> resMap = new HashMap<String,User>();
+        Map<String,User> resMap = new HashMap<>();
         resMap.put("user_info", user);
         return JsonDataWrapperUtil.success_200(resMap);
     }
@@ -51,7 +49,7 @@ public class UserController {
     @RequestMapping("/info/private")
     @ResponseBody
     public JsonDataWrapper getUserInfoPrivate(@RequestParam("uid") Long uid,@RequestParam("accountToken") String token){
-        //TODO: 需要验证用户权限，使用token
+        //需要验证用户权限，使用token
         if(tokenService.isTokenExpired(token)){
             return JsonDataWrapperUtil.fail_402(null);
         }
@@ -62,5 +60,37 @@ public class UserController {
         Map<String,User> resMap = new HashMap<>();
         resMap.put("user_info", user);
         return JsonDataWrapperUtil.success_200(resMap);
+    }
+
+    @PostMapping("/focus")
+    @ResponseBody
+    public JsonDataWrapper focusUser(@RequestBody Map<String,String> reqMap){
+        long myUid = Long.parseLong(reqMap.get("my_uid"));
+        long focusUid = Long.parseLong(reqMap.get("focus_uid"));
+        String token = reqMap.get("token");
+        if(tokenService.isTokenExpired(token)){
+            return JsonDataWrapperUtil.fail_402(null);
+        }
+        boolean isSuccess = userService.focusUser(myUid, focusUid);
+        if(!isSuccess){
+            return JsonDataWrapperUtil.fail_402("已关注");
+        }
+        return JsonDataWrapperUtil.success_200(null);
+    }
+
+    @PostMapping("/unfocus")
+    @ResponseBody
+    public JsonDataWrapper unfocusUser(@RequestBody Map<String,String> reqMap){
+        long myUid = Long.parseLong(reqMap.get("my_uid"));
+        long focusUid = Long.parseLong(reqMap.get("focus_uid"));
+        String token = reqMap.get("token");
+        if(tokenService.isTokenExpired(token)){
+            return JsonDataWrapperUtil.fail_402(null);
+        }
+        boolean isSuccess = userService.unfocusUser(myUid, focusUid);
+        if(!isSuccess){
+            return JsonDataWrapperUtil.fail_402("已取关");
+        }
+        return JsonDataWrapperUtil.success_200(null);
     }
 }

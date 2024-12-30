@@ -2,9 +2,14 @@ package com.easyfun.service;
 
 import com.easyfun.mapper.UserMapper;
 import com.easyfun.pojo.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * @author ：李冠良
@@ -14,11 +19,14 @@ import org.springframework.util.Assert;
 @Service
 public class UserService {
     private final UserMapper userMapper;
+    private final Gson gson;
 
     @Autowired
-    public UserService(UserMapper userMapper) {
+    public UserService(UserMapper userMapper, Gson gson) {
         Assert.notNull(userMapper, "userMapper must not be null");
+        Assert.notNull(gson, "gson must not be null");
         this.userMapper = userMapper;
+        this.gson = gson;
     }
 
     public User getUserInfoPublic(long uid) {
@@ -40,6 +48,30 @@ public class UserService {
             return false;
         }
         userMapper.modifyUserCoin(uid, -coinNum);
+        return true;
+    }
+
+    public boolean focusUser(long uid,long focusUid) {
+        JsonArray attentionJsonArray = userMapper.selectByPrimaryKey(uid).getAttentionList();
+        List<Long> attentionList = gson.fromJson(attentionJsonArray, new TypeToken<List<Long>>() {});
+        if(attentionList.contains(focusUid)){
+            return false;
+        }
+        attentionList.add(focusUid);
+        JsonArray newJsonArray = gson.fromJson(gson.toJson(attentionList),JsonArray.class);
+        userMapper.updateAttentionList(uid,newJsonArray);
+        return true;
+    }
+
+    public boolean unfocusUser(long uid,long focusUid) {
+        JsonArray attentionJsonArray = userMapper.selectByPrimaryKey(uid).getAttentionList();
+        List<Long> attentionList = gson.fromJson(attentionJsonArray, new TypeToken<List<Long>>() {});
+        if(!attentionList.contains(focusUid)){
+            return false;
+        }
+        attentionList.remove(focusUid);
+        JsonArray newJsonArray = gson.fromJson(gson.toJson(attentionList),JsonArray.class);
+        userMapper.updateAttentionList(uid,newJsonArray);
         return true;
     }
 }

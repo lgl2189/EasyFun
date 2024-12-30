@@ -1,6 +1,7 @@
 package com.easyfun.mapper;
 
 import com.easyfun.pojo.User;
+import com.google.gson.JsonArray;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +26,7 @@ public interface UserMapper {
     User selectUserInfoPublic(Long uid);
 
     int modifyUserCoin(@Param("uid") Long uid, @Param("num") int num);
+
+    void updateAttentionList(@Param("uid") Long uid, @Param("attentionList")JsonArray attentionList);
+//    void updateFollowerList(@Param("uid") Long uid, @Param("followerList")JsonArray followerList);
 }

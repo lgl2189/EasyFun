@@ -141,4 +141,8 @@ public class VideoService {
             videoMapper.adjustShareNum(vid, -1);
         }
     }
+
+    public boolean isVideoExists(Long vid) {
+        return videoMapper.selectByPrimaryKey(vid) != null;
+    }
 }

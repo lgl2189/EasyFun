@@ -47,11 +47,11 @@ public class User {
 
     private String ipPos;
 
-    public JsonArray tagList;
+    private JsonArray tagList;
 
-    public JsonArray followList;
+    private JsonArray followList;
 
-    public JsonArray attentionList;
+    private JsonArray attentionList;
 
     public Long getUid() {
         return uid;
