@@ -1,10 +1,12 @@
 package com.easyfun.mapper;
 
 import com.easyfun.pojo.CommentSave;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface CommentSaveMapper {
     int insert(CommentSave row);
 

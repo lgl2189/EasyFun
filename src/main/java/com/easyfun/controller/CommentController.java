@@ -8,7 +8,6 @@ import com.easyfun.pojo.Reply;
 import com.easyfun.service.CommentService;
 import com.easyfun.service.VideoService;
 import com.easyfun.util.JsonDataWrapperUtil;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -68,13 +67,13 @@ public class CommentController {
                                           @RequestParam("pageSize") int pageSize) {
         try {
             long caid = videoService.getVideoByVid(vid).getCommentAid();
-            PageObjectWrapper<List<ReplyInfo>> pageObjectWrapper = commentService.getReplyListByCaid(caid,page,pageSize);
+            PageObjectWrapper<List<ReplyInfo>,Reply> pageObjectWrapper = commentService.getReplyListByCaid(caid,page,pageSize);
             List<ReplyInfo> replyList = pageObjectWrapper.getObject();
             Map<String, Object> resMap = new HashMap<>();
             resMap.put("caid", caid);
             resMap.put("commentList", replyList);
-            resMap.put("page", pageObjectWrapper.getPageNum());
-            resMap.put("total", pageObjectWrapper.getTotal());
+            resMap.put("page", pageObjectWrapper.getPageInfo().getPageNum());
+            resMap.put("total", pageObjectWrapper.getPageInfo().getPages());
             return JsonDataWrapperUtil.success_200(resMap);
         }
         catch (Exception e) {

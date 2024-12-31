@@ -12,6 +12,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.mysql.cj.log.LogFactory;
 import org.apache.commons.text.RandomStringGenerator;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -73,7 +74,6 @@ public class SpringConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setTypeHandlers(new StringToJsonObject(gson()),new StringToJsonArray(gson()));
-
         // 注册 PageHelper 插件
         PageInterceptor pageInterceptor = new PageInterceptor();
         Properties properties = new Properties();
@@ -81,8 +81,7 @@ public class SpringConfig {
         properties.setProperty("helperDialect", "mysql");
         properties.setProperty("reasonable", "true"); // 合理化分页参数
         pageInterceptor.setProperties(properties);
-        sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageInterceptor});
-
+        sqlSessionFactoryBean.setPlugins(pageInterceptor);
         return sqlSessionFactoryBean.getObject();
     }
 

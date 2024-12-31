@@ -1,7 +1,9 @@
-import com.easyfun.enumeration.ImageFormatEnum;
-import com.easyfun.util.PasswordHasher;
+import com.easyfun.mapper.SearchMapper;
+import org.apache.ibatis.session.SqlSession;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ：李冠良
@@ -13,7 +15,6 @@ import java.security.NoSuchAlgorithmException;
 public class Test {
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        System.out.println(PasswordHasher.hashPassword("1111"));
     }
 
 }

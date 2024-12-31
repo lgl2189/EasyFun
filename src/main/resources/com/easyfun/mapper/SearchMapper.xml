@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.easyfun.mapper.SearchMapper">
+    <resultMap id="VideoMap" type="com.easyfun.pojo.Video">
+        <id column="vid" jdbcType="BIGINT" property="vid"/>
+        <result column="video_path" jdbcType="VARCHAR" property="videoPath"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="publisher_id" jdbcType="BIGINT" property="publisherId"/>
+        <result column="publisher_name" jdbcType="VARCHAR" property="publisherName"/>
+        <result column="like_num" jdbcType="INTEGER" property="likeNum"/>
+        <result column="coin_num" jdbcType="INTEGER" property="coinNum"/>
+        <result column="favorite_num" jdbcType="INTEGER" property="favoriteNum"/>
+        <result column="share_num" jdbcType="INTEGER" property="shareNum"/>
+        <result column="view_num" jdbcType="INTEGER" property="viewNum"/>
+        <result column="danmaku_num" jdbcType="INTEGER" property="danmakuNum"/>
+        <result column="comment_num" jdbcType="INTEGER" property="commentNum"/>
+        <result column="publish_datetime" jdbcType="TIMESTAMP" property="publishDatetime"/>
+        <result column="is_original" jdbcType="BIT" property="isOriginal"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="video_duration" jdbcType="TIME" property="videoDuration"/>
+        <result column="cover_uuid" jdbcType="VARCHAR" property="coverUuid"/>
+        <result column="tag_list" jdbcType="JAVA_OBJECT" property="tagList"/>
+        <result column="comment_aid" jdbcType="BIGINT" property="commentAid"/>
+        <result column="danmaku_list" jdbcType="JAVA_OBJECT" property="danmakuList"/>
+    </resultMap>
+    <select id="searchVideoTitleByKeywords" parameterType="list" resultMap="VideoMap">
+        SELECT * FROM (
+        SELECT v.*,
+        (SELECT COUNT(*)
+        FROM (
+        <foreach collection="keywords" item="keyword" separator=" UNION ALL ">
+            SELECT 1 FROM dual WHERE v.title LIKE CONCAT('%', #{keyword}, '%')
+        </foreach>
+        ) AS matches
+        ) AS match_count
+        FROM video v
+        ) AS ranked_videos
+        WHERE match_count > 0
+        ORDER BY match_count DESC
+    </select>
+</mapper>

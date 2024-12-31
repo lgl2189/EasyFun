@@ -1,7 +1,6 @@
 package com.easyfun.pojo;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

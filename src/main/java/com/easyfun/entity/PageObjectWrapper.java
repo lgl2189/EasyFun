@@ -1,26 +1,28 @@
 package com.easyfun.entity;
 
+import com.github.pagehelper.PageInfo;
+
 /**
  * @author ：李冠良
  * @description： 无描述
  * @date ：2024/12/27 上午11:22
  */
 
-
-public class PageObjectWrapper <T>{
+/**
+ *
+ * @param <T> 包裹的查询结果的类型 例如：List<User>
+ * @param <E> 包裹的查询结果的一个元素的类型 例如：User
+ */
+public class PageObjectWrapper <T,E>{
     private T object;
-    private int pageNum;
-    private int pageSize;
-    private int total;
+    private PageInfo<E> pageInfo;
 
     public PageObjectWrapper() {
     }
 
-    public PageObjectWrapper(T object, int pageNum, int pageSize, int total) {
+    public PageObjectWrapper(T object, PageInfo<E> pageInfo) {
         this.object = object;
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
-        this.total = total;
+        this.pageInfo = pageInfo;
     }
 
     public T getObject() {
@@ -31,37 +33,19 @@ public class PageObjectWrapper <T>{
         this.object = object;
     }
 
-    public int getPageNum() {
-        return pageNum;
+    public PageInfo<E> getPageInfo() {
+        return pageInfo;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
+    public void setPageInfo(PageInfo<E> pageInfo) {
+        this.pageInfo = pageInfo;
     }
 
     @Override
     public String toString() {
         return "PageObjectWrapper{" +
                 "object=" + object +
-                ", pageNum=" + pageNum +
-                ", pageSize=" + pageSize +
-                ", total=" + total +
+                ", pageInfo=" + pageInfo +
                 '}';
     }
 }

@@ -96,7 +96,7 @@ public class CommentService {
         return null;
     }
 
-    public PageObjectWrapper<List<ReplyInfo>> getReplyListByCaid(long caid, int commentPageNum, int commentPageSize) {
+    public PageObjectWrapper<List<ReplyInfo>,Reply> getReplyListByCaid(long caid, int commentPageNum, int commentPageSize) {
         List<ReplyInfo> resList = new ArrayList<>();
         PageHelper.startPage(commentPageNum, commentPageSize);
         List<Reply> firstReplyList = replyMapper.selectPartFirstReply(caid);
@@ -117,7 +117,7 @@ public class CommentService {
             ReplyInfo replyInfo = new ReplyInfo(firstReply, firstUser, secondaryReplyInfoList);
             resList.add(replyInfo);
         }
-        return new PageObjectWrapper<>(resList,pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getPages());
+        return new PageObjectWrapper<>(resList, pageInfo);
     }
 
     public List<ReplyInfo> getSecondaryReply(long oid, long root) {
