@@ -150,4 +150,14 @@
     <update id="adjustShareNum">
         update video set share_num = share_num + #{shareNum,jdbcType=INTEGER} where vid = #{vid,jdbcType=BIGINT}
     </update>
+    <select id="selectByPublisherUid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from video
+        where publisher_id = #{publisherUid,jdbcType=BIGINT}
+    </select>
+    <select id="selectUploadVideosByView" resultMap="BaseResultMap">
+        select * from video
+        where publisher_id = #{publisherUid,jdbcType=BIGINT}
+        order by view_num DESC
+        limit #{num,jdbcType=INTEGER}
+    </select>
 </mapper>

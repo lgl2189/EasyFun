@@ -32,4 +32,8 @@ public interface VideoMapper {
 
     void adjustShareNum(@Param("vid") Long vid, @Param("shareNum") int shareNum);
 
+    List<Video> selectByPublisherUid(@Param("publisherUid") Long publisherUid);
+
+    List<Video> selectUploadVideosByView(@Param("publisherUid") Long publisherUid,@Param("num") Integer num);
+
 }

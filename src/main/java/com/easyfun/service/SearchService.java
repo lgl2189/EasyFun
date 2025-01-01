@@ -37,6 +37,6 @@ public class SearchService {
         List<Video> videoInfoList = searchMapper.searchVideoTitleByKeywords(keys);
         PageInfo<Video> pageInfo = new PageInfo<>(videoInfoList);
         PageHelper.clearPage();
-        return new PageObjectWrapper<List<Video>,Video>(videoInfoList,pageInfo);
+        return new PageObjectWrapper<>(videoInfoList, pageInfo);
     }
 }

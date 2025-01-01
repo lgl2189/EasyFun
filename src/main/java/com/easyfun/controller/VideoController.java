@@ -1,6 +1,7 @@
 package com.easyfun.controller;
 
 import com.easyfun.entity.JsonDataWrapper;
+import com.easyfun.entity.PageObjectWrapper;
 import com.easyfun.entity.VideoUploadInfo;
 import com.easyfun.pojo.Video;
 import com.easyfun.pojo.VideoSave;
@@ -155,7 +156,8 @@ public class VideoController {
     @PostMapping("/upload")
     public @ResponseBody JsonDataWrapper uploadVideo(@RequestParam("video_files") MultipartFile[] videoFiles,
                                                      @RequestParam(value = "cover_blobs", required = false) MultipartFile[] videoCovers,
-                                                     @RequestParam("meta_data") String metaDataStr) {
+                                                     @RequestParam("meta_data") String metaDataStr,
+                                                     @RequestParam("publisher_uid") Long publisherUid) {
         if (videoFiles == null || videoFiles.length == 0) {
             return JsonDataWrapperUtil.fail_402(null, "请上传视频文件");
         }
@@ -191,12 +193,14 @@ public class VideoController {
                 }
             }
         }
+        String publisheName = userService.getUserInfoPublic(publisherUid).getName();
         for (Map.Entry<String, VideoUploadInfo> entry : metaHashMap.entrySet()) {
             VideoUploadInfo videoUploadInfo = entry.getValue();
-            String fileName = videoUploadInfo.getName();
+            videoUploadInfo.setPublisherUid(publisherUid);
+            videoUploadInfo.setPublisherName(publisheName);
             byte[] videoBytes = videoUploadInfo.getVideoFile();
             byte[] coverBytes = videoUploadInfo.getCoverFile();
-            videoService.addVideo(fileName, videoBytes, coverBytes);
+            videoService.addVideo(videoUploadInfo, videoBytes, coverBytes);
         }
         return JsonDataWrapperUtil.success_200(null, "上传失败个数：" + count);
     }
@@ -263,8 +267,35 @@ public class VideoController {
         return JsonDataWrapperUtil.success_200(resMap);
     }
 
-    //    @PostMapping("/like")
-//    public @ResponseBody JsonDataWrapper changeIsLike(){
-//
-//    }
+    @GetMapping("/get/upload")
+    @ResponseBody
+    public JsonDataWrapper getUserUploadList(@RequestParam("publisher_uid") Long publisherUid,
+                                             @RequestParam(value = "page_num", required = false, defaultValue = "1") int pageNum,
+                                             @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize) {
+        //检查用户是否存在
+        if(!userService.isUserExists(publisherUid)){
+            return JsonDataWrapperUtil.fail_402(null, "用户不存在");
+        }
+        PageObjectWrapper<List<Video>,Video> pageObjectWrapper = videoService.getVideoListByPublisherUid(publisherUid, pageNum, pageSize);
+        List<Video> videoList = pageObjectWrapper.getObject();
+        Map<String,Object> resMap = new HashMap<>();
+        resMap.put("video_list", videoList);
+        resMap.put("page_total", pageObjectWrapper.getPageInfo().getPages());
+        return JsonDataWrapperUtil.success_200(resMap);
+    }
+
+    @GetMapping("/get/upload/recommend")
+    @ResponseBody
+    public JsonDataWrapper getRecommendUploadList(@RequestParam("publisher_uid") Long publisherUid,
+                                                  @RequestParam(value = "num", required = false, defaultValue = "10") int num) {
+        //推荐用户播放量前十的视频
+        //检查用户是否存在
+        if(!userService.isUserExists(publisherUid)){
+            return JsonDataWrapperUtil.fail_402(null, "用户不存在");
+        }
+        List<Video> recommendVideoList = videoService.getRecommendUploadVideo(publisherUid,num);
+        Map<String,Object> resMap = new HashMap<>();
+        resMap.put("video_list", recommendVideoList);
+        return JsonDataWrapperUtil.success_200(resMap);
+    }
 }

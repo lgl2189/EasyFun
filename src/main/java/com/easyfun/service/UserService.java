@@ -74,4 +74,13 @@ public class UserService {
         userMapper.updateAttentionList(uid,newJsonArray);
         return true;
     }
+
+    /**
+     * 判断用户是否存在
+     * @param uid
+     * @return true：存在，false：不存在
+     */
+    public boolean isUserExists(Long uid) {
+        return userMapper.selectByPrimaryKey(uid) != null;
+    }
 }
