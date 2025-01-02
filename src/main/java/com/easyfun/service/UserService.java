@@ -60,6 +60,8 @@ public class UserService {
         attentionList.add(focusUid);
         JsonArray newJsonArray = gson.fromJson(gson.toJson(attentionList),JsonArray.class);
         userMapper.updateAttentionList(uid,newJsonArray);
+        userMapper.modifyUserAttentionNum(uid,1);
+        userMapper.modifyUserFollowNum(focusUid,1);
         return true;
     }
 
@@ -72,6 +74,8 @@ public class UserService {
         attentionList.remove(focusUid);
         JsonArray newJsonArray = gson.fromJson(gson.toJson(attentionList),JsonArray.class);
         userMapper.updateAttentionList(uid,newJsonArray);
+        userMapper.modifyUserAttentionNum(uid,-1);
+        userMapper.modifyUserFollowNum(focusUid,-1);
         return true;
     }
 

@@ -28,4 +28,8 @@ public interface UserMapper {
     int modifyUserCoin(@Param("uid") Long uid, @Param("num") int num);
 
     void updateAttentionList(@Param("uid") Long uid, @Param("attentionList")JsonArray attentionList);
+
+    void modifyUserAttentionNum(@Param("uid") Long uid, @Param("num") int num);
+
+    void modifyUserFollowNum(@Param("uid") Long uid, @Param("num") int num);
 }
