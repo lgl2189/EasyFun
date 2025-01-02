@@ -36,4 +36,9 @@ public interface VideoMapper {
 
     List<Video> selectUploadVideosByView(@Param("publisherUid") Long publisherUid,@Param("num") Integer num);
 
+    void modifyViewNum(@Param("vid") Long vid, @Param("viewNum") int viewNum);
+
+    void modifyCommentNum(@Param("vid") Long vid, @Param("commentNum") int commentNum);
+
+    Video selectByCaid(@Param("caid") Long caid);
 }

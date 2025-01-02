@@ -154,10 +154,25 @@
         select * from video
         where publisher_id = #{publisherUid,jdbcType=BIGINT}
     </select>
-    <select id="selectUploadVideosByView" resultMap="BaseResultMap">
+    <update id="selectUploadVideosByView">
         select * from video
         where publisher_id = #{publisherUid,jdbcType=BIGINT}
         order by view_num DESC
         limit #{num,jdbcType=INTEGER}
+    </update>
+
+    <update id="modifyViewNum">
+        update video set view_num = view_num + 1
+        where vid = #{vid,jdbcType=BIGINT}
+    </update>
+
+    <update id="modifyCommentNum">
+        update video set comment_num = comment_num + 1
+        where vid = #{vid,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByCaid" resultMap="BaseResultMap">
+        select * from video
+        where comment_aid = #{caid,jdbcType=BIGINT}
     </select>
 </mapper>

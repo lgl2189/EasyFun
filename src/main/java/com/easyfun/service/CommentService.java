@@ -74,9 +74,10 @@ public class CommentService {
     //评论相关
 
     public void addReply(Reply reply) {
-        //TODO: 检查评论区是否存在
         replyMapper.updateReplyNum(reply.getOid(), reply.getRoot(), reply.getParent());
         replyMapper.insert(reply);
+        Long vid = videoMapper.selectByCaid(reply.getOid()).getVid();
+        videoMapper.modifyCommentNum(vid, 1);
     }
 
     public void deleteReply(long rpid) {

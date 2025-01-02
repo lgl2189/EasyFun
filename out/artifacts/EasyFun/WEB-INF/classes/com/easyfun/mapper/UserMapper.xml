@@ -182,4 +182,14 @@
         update user set attention_list = #{attentionList,jdbcType=JAVA_OBJECT}
         where uid = #{uid,jdbcType=BIGINT}
     </update>
+
+    <select id="modifyUserAttentionNum">
+        update user set attention_num = attention_num + #{num,jdbcType=INTEGER}
+        where uid = #{uid,jdbcType=BIGINT}
+    </select>
+
+    <select id="modifyUserFollowNum">
+        update user set follower_num = follower_num + #{num,jdbcType=INTEGER}
+        where uid = #{uid,jdbcType=BIGINT}
+    </select>
 </mapper>
